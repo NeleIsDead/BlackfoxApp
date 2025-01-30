@@ -7,4 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".WorkerMainActivity">
 
+    <TextView
+        android:id="@+id/worker_activity"
+        android:layout_width="185dp"
+        android:layout_height="91dp"
+        android:text="worker_activity"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="255dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

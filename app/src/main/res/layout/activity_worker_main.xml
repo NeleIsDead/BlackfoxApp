@@ -7,4 +7,74 @@
     android:layout_height="match_parent"
     tools:context=".WorkerMainActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="298dp"
+        android:layout_height="197dp"
+        android:layout_marginTop="44dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/nextWorkDate"
+            android:layout_width="278dp"
+            android:layout_height="39dp"
+            android:text="Date"
+            android:textColor="@color/kindaWhite"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.772"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text=" 31 февраля" />
+
+        <TextView
+            android:id="@+id/nextWorkPlace"
+            android:layout_width="275dp"
+            android:layout_height="43dp"
+            android:text="Address"
+            android:textColor="@color/kindaWhite"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.695"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.824"
+            tools:text="BLACK FOX (Остановка Октябрьская революция)" />
+
+        <TextView
+            android:id="@+id/nextWorkTime"
+            android:layout_width="233dp"
+            android:layout_height="49dp"
+            android:text="Time"
+            android:textColor="@color/kindaWhite"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.253"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.103"
+            tools:text="16:00 - 20:00" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/address_list_recycler"
+        android:layout_width="309dp"
+        android:layout_height="412dp"
+        android:layout_marginTop="312dp"
+        android:background="@color/black1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

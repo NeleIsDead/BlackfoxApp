@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="addressArray">
+        <item>Адрес 1</item>
+        <item>Адрес 2</item>
+        <item>Адрес 3</item>
+        <item>Адрес 4</item>
+    </string-array>
+</resources>

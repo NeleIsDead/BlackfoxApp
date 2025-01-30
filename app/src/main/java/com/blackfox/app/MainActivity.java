@@ -2,6 +2,7 @@ package com.blackfox.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,15 +34,16 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inputedcode = inputCode.getText().toString();
+                String inputtedCode = inputCode.getText().toString();
 
-                if(isCodeValid(inputedcode)){
-                    if(userIsAdmin(inputedcode)){
+                if(isCodeValid(inputtedCode)){
+                    if(userIsAdmin(inputtedCode)){
+                        Log.d("main_activity", "going to admin screen");
                         goToAdminScreen();
 
                     }else{
+                        Log.d("main_activity", "going to worker screen");
                         goToWorkerScreen();
-
                     }
 
                 }else {
@@ -64,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
         return isCodeValid;
     }
     private boolean userIsAdmin(String loginCode){
-        boolean userIsAdmin = true;
+        boolean userIsAdmin = false;
 
-        return  userIsAdmin;
+        return userIsAdmin;
     }
     public void goToWorkerScreen(){
         invalidateMenu();
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void goToAdminScreen(){
         invalidateMenu();
-        Intent intent = new Intent(this, WorkerMainActivity.class);
+        Intent intent = new Intent(this, AdminMainActivity.class);
         startActivity(intent);
     }
 

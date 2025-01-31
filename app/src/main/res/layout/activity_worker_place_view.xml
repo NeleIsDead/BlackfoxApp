@@ -12,7 +12,7 @@
         android:id="@+id/calendarView"
         android:layout_width="330dp"
         android:layout_height="304dp"
-        android:layout_marginBottom="360dp"
+        android:layout_marginBottom="372dp"
         android:clickable="true"
         android:focusable="true"
         android:onClick="CalendarClick"
@@ -65,25 +65,25 @@
         android:layout_width="239dp"
         android:layout_height="32dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="404dp"
         android:layout_marginBottom="295dp"
         android:text="Уже на 1 смене: 0 чел."
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/workersForSecondShift"
         android:layout_width="239dp"
         android:layout_height="32dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="461dp"
         android:layout_marginBottom="238dp"
         android:text="Уже на 2 смене: 0 чел."
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/workersForFirstShift"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

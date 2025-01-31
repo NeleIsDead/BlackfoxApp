@@ -20,7 +20,7 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
 
     public String chosenAddress;
     TextView nextWorkDate, nextWorkTime, nextWorkPlace;
-    public final ArrayList<String> addressArray = new ArrayList<String>(Arrays.asList(new String[]{"address A", "address B", "address C"}));
+    public final ArrayList<String> addressArray = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

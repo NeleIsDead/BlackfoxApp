@@ -24,6 +24,8 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
     TextView addressTextView, firstShiftWorkerNum, secondShiftWorkerNum;
     CheckBox enrollFirstShift,enrollSecondShift;
 
+    public int workersForFirstShift,workersForSecondShift;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,24 +48,25 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         addressTextView.setText(bundle.getString("address"));
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 Log.d("calendar", year + " " + month + " " + dayOfMonth);
-                int workersForFirstShift = 6;
-                int workersForSecondShift = 6;
-                firstShiftWorkerNum.setText(workersForFirstShift);
-                secondShiftWorkerNum. setText(workersForSecondShift);
+                workersForFirstShift = 0;
+                workersForSecondShift = 6;
+                firstShiftWorkerNum.setText("Уже на 1 смене: " + String.valueOf(workersForFirstShift) +" чел");
+                secondShiftWorkerNum. setText("Уже на 2 смене: " + String.valueOf(workersForSecondShift) +" чел");
             }
         });
         enrollFirstShift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(firstShiftWorkerNum.getText().toString()) <= 6) {
+                if (workersForFirstShift < 6) {
                     //Отправить серверу инфу о зарезервированном времени
                     Snackbar.make(v, "Время работы выбрано", BaseTransientBottomBar.LENGTH_SHORT).show();
                 }else {
                     Snackbar.make(v, "На смене уже максимум работников, или произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
-                    enrollFirstShift.setActivated(false);
+                    enrollFirstShift.toggle();
                 }
 
             }
@@ -72,12 +75,12 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         enrollSecondShift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(secondShiftWorkerNum.getText().toString()) <= 6) {
+                if (workersForSecondShift < 6) {
                     //Отправить серверу инфу о зарезервированном времени
                     Snackbar.make(v, "Время работы выбрано", BaseTransientBottomBar.LENGTH_SHORT).show();
                 }else {
                     Snackbar.make(v, "На смене уже максимум работников, или произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
-                    enrollSecondShift.setActivated(false);
+                    enrollSecondShift.toggle();
                 }
 
             }

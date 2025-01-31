@@ -12,7 +12,7 @@
         android:id="@+id/calendarView"
         android:layout_width="330dp"
         android:layout_height="304dp"
-        android:layout_marginBottom="360dp"
+        android:layout_marginBottom="344dp"
         android:clickable="true"
         android:focusable="true"
         android:onClick="CalendarClick"
@@ -20,5 +20,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="327dp"
+        android:layout_height="48dp"
+        android:text="Список работников"
+        app:layout_constraintEnd_toEndOf="@+id/calendarView"
+        app:layout_constraintStart_toStartOf="@+id/calendarView"
+        tools:layout_editor_absoluteY="19dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="328dp"
+        android:layout_height="322dp"
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="403dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

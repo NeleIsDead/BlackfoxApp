@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 public class AdminMainActivity extends AppCompatActivity implements AddressChoiceInterface {
 
-    CalendarView calendarView;
+
     Button workerList;
     RecyclerView addressListRecycler;
     public final ArrayList<String> addressArray = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
@@ -47,16 +47,6 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
             }
         });
 
-
-
-        calendarView = findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Log.d("calendar", year + " " + month + " " + dayOfMonth);
-                // Запрос к серверу чтобы узнать сколько людей есть на смену
-            }
-        });
 
 
         addressListRecycler = findViewById(R.id.address_list_recycler);

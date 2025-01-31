@@ -11,10 +11,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="329dp"
         android:layout_height="304dp"
+        android:layout_marginBottom="39dp"
         app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/workersForFirstShift"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="62dp">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
 
         <CalendarView
             android:id="@+id/calendarView"
@@ -25,6 +27,7 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="CalendarClick"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
@@ -48,48 +51,71 @@
         android:id="@+id/enrollFirstShift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="541dp"
+        android:layout_marginBottom="142dp"
+        android:buttonTint="@color/orange"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="Занять 1 смену"
         android:textColor="@color/white"
-        android:fontFamily="sans-serif-condensed-medium"
         android:textStyle="bold"
-        android:buttonTint="@color/orange"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="541dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/enrollSecondShift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Занять 2 смену"
-        android:textColor="@color/white"
+        android:layout_marginTop="541dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="142dp"
         android:buttonTint="@color/orange"
         android:fontFamily="sans-serif-condensed-medium"
+        android:text="Занять 2 смену"
+        android:textColor="@color/white"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="234dp"
-        tools:layout_editor_absoluteY="541dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/workersForFirstShift"
         android:layout_width="239dp"
         android:layout_height="32dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="405dp"
+        android:layout_marginBottom="294dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="Уже на 1 смене: 0 чел."
         android:textColor="@color/white"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textStyle="bold"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="405dp" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/workersForSecondShift"
         android:layout_width="239dp"
         android:layout_height="32dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="467dp"
+        android:layout_marginBottom="232dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Уже на 2 смене: 0 чел."
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="467dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

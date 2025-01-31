@@ -10,12 +10,35 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="351dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginBottom="387dp"
+        android:layout_width="330dp"
+        android:layout_height="304dp"
+        android:layout_marginBottom="360dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="CalendarClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/addressText"
+        android:layout_width="389dp"
+        android:layout_height="45dp"
+        android:text="BLACK FOX (ТЦ &quot;Зебра&quot;)"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/calendarView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.347" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="327dp"
+        android:layout_height="318dp"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="397dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

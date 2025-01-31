@@ -30,23 +30,22 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         inputCode = findViewById(R.id.codeInputField);
 
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String inputtedCode = inputCode.getText().toString();
 
-                if(isCodeValid(inputtedCode)){
-                    if(userIsAdmin(inputtedCode)){
+                if (isCodeValid(inputtedCode)) {
+                    if (userIsAdmin(inputtedCode)) {
                         Log.d("main_activity", "going to admin screen");
                         goToAdminScreen();
 
-                    }else{
+                    } else {
                         Log.d("main_activity", "going to worker screen");
                         goToWorkerScreen();
                     }
 
-                }else {
+                } else {
                     Snackbar.make(v, "Код неправильный или уже занят", BaseTransientBottomBar.LENGTH_SHORT).show();
                 }
             }
@@ -60,22 +59,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isCodeValid(String loginCode){
+    private boolean isCodeValid(String loginCode) {
         boolean isCodeValid = true;
 
         return isCodeValid;
     }
-    private boolean userIsAdmin(String loginCode){
+
+    private boolean userIsAdmin(String loginCode) {
         boolean userIsAdmin = false;
 
         return userIsAdmin;
     }
-    public void goToWorkerScreen(){
+
+    public void goToWorkerScreen() {
         invalidateMenu();
         Intent intent = new Intent(this, WorkerMainActivity.class);
         startActivity(intent);
     }
-    public void goToAdminScreen(){
+
+    public void goToAdminScreen() {
         invalidateMenu();
         Intent intent = new Intent(this, AdminMainActivity.class);
         startActivity(intent);

@@ -7,11 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".AdminMainActivity">
 
-    <TextView
-        android:id="@+id/admin_activity"
-        android:layout_width="185dp"
-        android:layout_height="91dp"
-        android:text="admin_activity"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="255dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="330dp"
+        android:layout_height="304dp"
+        android:layout_marginBottom="360dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="CalendarClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    >

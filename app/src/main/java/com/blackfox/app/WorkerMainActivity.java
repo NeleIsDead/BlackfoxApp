@@ -16,11 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class WorkerMainActivity extends AppCompatActivity implements AddressChoiceInterface{
+public class WorkerMainActivity extends AppCompatActivity implements AddressChoiceInterface {
 
-
-    TextView nextWorkDate,nextWorkTime,nextWorkPlace;
+    public String chosenAddress;
+    TextView nextWorkDate, nextWorkTime, nextWorkPlace;
     public final ArrayList<String> addressArray = new ArrayList<String>(Arrays.asList(new String[]{"address A", "address B", "address C"}));
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +37,15 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
         nextWorkPlace = findViewById(R.id.nextWorkPlace);
         nextWorkTime = findViewById(R.id.nextWorkTime);
 
-        parseNextWorkTime(nextWorkDate,nextWorkTime,nextWorkPlace);
+        parseNextWorkTime(nextWorkDate, nextWorkTime, nextWorkPlace);
 
         RecyclerView addressListRecycler = findViewById(R.id.address_list_recycler);
         Log.d("WorkerMainActivity", addressArray.toString());
 
 
-        AddressListArrayAdapter adapter = new AddressListArrayAdapter(this, addressArray,this);
+        AddressListArrayAdapter adapter = new AddressListArrayAdapter(this, addressArray, this);
         addressListRecycler.setAdapter(adapter);
         addressListRecycler.setLayoutManager(new LinearLayoutManager(this));
-
 
 
     }
@@ -53,13 +53,21 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
     @Override
     public void onItemclick(int position) {
         Intent intent = new Intent(this, WorkerPlaceViewActivity.class);
+        chosenAddress = addressArray.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putString("address", chosenAddress);
+        intent.putExtras(bundle);
         invalidateMenu();
         startActivity(intent);
+
     }
-    private void parseNextWorkTime(TextView nextWorkDate,TextView nextWorkTime,TextView nextWorkPlace){
+
+    private void parseNextWorkTime(TextView nextWorkDate, TextView nextWorkTime, TextView nextWorkPlace) {
+        //Сделать запрос к серверу чтоб получить дату и чет пошаманить с ней
         nextWorkPlace.setText("BLACK FOX (Остановка Октябрьская революция)");
         nextWorkDate.setText("31 февраля");
         nextWorkTime.setText("16:00 - 00:00");
 
     }
+
 }

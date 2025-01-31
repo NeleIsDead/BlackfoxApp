@@ -31,7 +31,7 @@
                 tools:layout_editor_absoluteY="65dp" />
 
             <TextView
-                android:id="@+id/addressText"
+                android:id="@+id/userName"
                 android:layout_width="379dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="16dp"

@@ -5,85 +5,91 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/gray"
     tools:context=".WorkerPlaceViewActivity">
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="330dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="329dp"
         android:layout_height="304dp"
-        android:layout_marginBottom="372dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="CalendarClick"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="62dp">
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="330dp"
+            android:layout_height="304dp"
+            android:layout_marginBottom="372dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="CalendarClick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/addressText"
         android:layout_width="389dp"
         android:layout_height="45dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="BLACK FOX (ТЦ &quot;Зебра&quot;)"
         android:textAlignment="center"
+        android:textColor="@color/orange"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/calendarView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.347" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <CheckBox
         android:id="@+id/enrollFirstShift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="540dp"
-        android:layout_marginBottom="143dp"
         android:text="Занять 1 смену"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textStyle="bold"
+        android:buttonTint="@color/orange"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="541dp" />
 
     <CheckBox
         android:id="@+id/enrollSecondShift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="234dp"
-        android:layout_marginTop="540dp"
-        android:layout_marginBottom="143dp"
         android:text="Занять 2 смену"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/white"
+        android:buttonTint="@color/orange"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="234dp"
+        tools:layout_editor_absoluteY="541dp" />
 
     <TextView
         android:id="@+id/workersForFirstShift"
         android:layout_width="239dp"
         android:layout_height="32dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="295dp"
         android:text="Уже на 1 смене: 0 чел."
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textStyle="bold"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="1.0" />
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="405dp" />
 
     <TextView
         android:id="@+id/workersForSecondShift"
         android:layout_width="239dp"
         android:layout_height="32dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="238dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="Уже на 2 смене: 0 чел."
+        android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workersForFirstShift"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="467dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

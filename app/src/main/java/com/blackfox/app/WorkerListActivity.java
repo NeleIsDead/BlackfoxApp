@@ -7,9 +7,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WorkerListActivity extends AppCompatActivity {
 
+
+    ArrayList<Slave> userArrayList;
+    RecyclerView userRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,44 +28,20 @@ public class WorkerListActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        userRecyclerView = findViewById(R.id.userRecyclerView);
+        userArrayList = new ArrayList<Slave>();
+
+        UserListArrayAdapter adapter = new UserListArrayAdapter(this, getUserArrayList(userArrayList));
+        userRecyclerView.setAdapter(adapter);
+        userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-}
-class Slave{
-    String firstName;
-    String lastName;
-    String phoneNumber;
-    boolean isAdmin;
+    public ArrayList<Slave> getUserArrayList(ArrayList<Slave> userArrayList) {
 
-    public String getFirstName() {
-        return firstName;
-    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+        userArrayList.add(new Slave("HBFHB", "fiwehif", "fhweufhwehf", "weiufhiuhfiuh", false));
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        return userArrayList;
     }
 }

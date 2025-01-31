@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 
 import retrofit2.Call;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private boolean isCodeValid(String loginCode) {
         boolean isCodeValid = true;
 
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean userIsAdmin(String loginCode) {
-        boolean userIsAdmin = false;
+        boolean userIsAdmin = true;
 
         return userIsAdmin;
     }

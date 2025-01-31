@@ -13,7 +13,7 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="10dp"
         app:cardCornerRadius="25dp"
-        app:cardBackgroundColor="@color/orange">
+        app:cardBackgroundColor="@color/darkgray">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -23,37 +23,48 @@
 
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/phoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="88005553535"
+                android:textColor="@color/orange"
+                android:textStyle="bold"
+                android:textAlignment="textStart"
+                android:textSize="16dp"
                 tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="65dp" />
+                tools:layout_editor_absoluteY="57dp" />
 
             <TextView
-                android:id="@+id/addressText"
+                android:id="@+id/userName"
                 android:layout_width="379dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:lineSpacingExtra="14sp"
                 android:text="Иван Иванов"
-                android:textAlignment="textStart"
+                android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="@color/black2"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.262" />
+                app:layout_constraintVertical_bias="0.367" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/userCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="Код пользователя хз как"
-                tools:layout_editor_absoluteX="168dp"
-                tools:layout_editor_absoluteY="65dp" />
+                android:textAlignment="textEnd"
+                android:textColor="@color/orange"
+                android:textSize="14dp"
+                android:textStyle="normal"
+                tools:layout_editor_absoluteX="232dp"
+                tools:layout_editor_absoluteY="60dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

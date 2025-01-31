@@ -5,6 +5,14 @@ public class Slave{
     String lastName;
     String phoneNumber;
 
+    public Slave(String firstName, String lastName, String phoneNumber, String code, boolean isAdmin) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.code = code;
+        this.isAdmin = isAdmin;
+    }
+
     public String getCode() {
         return code;
     }

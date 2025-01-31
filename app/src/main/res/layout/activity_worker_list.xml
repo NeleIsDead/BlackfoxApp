@@ -9,7 +9,7 @@
     tools:context=".WorkerListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/userRecyclerView"
         android:layout_width="407dp"
         android:layout_height="657dp"
         android:layout_marginTop="73dp"

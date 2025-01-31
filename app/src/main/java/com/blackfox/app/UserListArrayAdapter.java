@@ -17,8 +17,9 @@ public class UserListArrayAdapter extends RecyclerView.Adapter<UserListArrayAdap
     @NonNull
     ArrayList<Slave> userList;
 
-    public UserListArrayAdapter(Context ctx, @NonNull ArrayList<String> serverArrayList) {
+    public UserListArrayAdapter(Context ctx, @NonNull ArrayList<Slave> userArrayList) {
         this.ctx = ctx;
+        this.userList = userArrayList;
 
     }
 
@@ -32,6 +33,7 @@ public class UserListArrayAdapter extends RecyclerView.Adapter<UserListArrayAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         holder.phoneNumber.setText(userList.get(position).getPhoneNumber());
         String userNameT = userList.get(position).getPhoneNumber() + " " + userList.get(position).getLastName();
         holder.userName.setText(userNameT);

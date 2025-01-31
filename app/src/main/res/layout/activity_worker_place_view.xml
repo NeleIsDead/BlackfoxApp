@@ -36,9 +36,54 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.347" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="327dp"
-        android:layout_height="318dp"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="397dp" />
+    <CheckBox
+        android:id="@+id/enrollFirstShift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="540dp"
+        android:layout_marginBottom="143dp"
+        android:text="Занять 1 смену"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/enrollSecondShift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="234dp"
+        android:layout_marginTop="540dp"
+        android:layout_marginBottom="143dp"
+        android:text="Занять 2 смену"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/workersForFirstShift"
+        android:layout_width="239dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="404dp"
+        android:layout_marginBottom="295dp"
+        android:text="Уже на 1 смене: 0 чел."
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/workersForSecondShift"
+        android:layout_width="239dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="461dp"
+        android:layout_marginBottom="238dp"
+        android:text="Уже на 2 смене: 0 чел."
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

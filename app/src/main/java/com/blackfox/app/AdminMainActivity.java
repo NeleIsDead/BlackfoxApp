@@ -2,6 +2,7 @@ package com.blackfox.app;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.CalendarView;
 
 import androidx.activity.EdgeToEdge;
@@ -32,8 +33,11 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 Log.d("calendar", year + " " + month + " " + dayOfMonth);
-                // тут спросить у сервера список свободного времени на указанную дату
+                // Запрос к серверу чтобы узнать сколько людей есть на смену
             }
         });
+    }
+
+    public void CalendarClick(View view) {
     }
 }

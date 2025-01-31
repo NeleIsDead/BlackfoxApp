@@ -53,6 +53,7 @@ public class UserListArrayAdapter extends RecyclerView.Adapter<UserListArrayAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            Log.d("IFH", "IIIINEFIJWNIJFNIJNI");
             phoneNumber = itemView.findViewById(R.id.phoneNumber);
             userName = itemView.findViewById(R.id.userName);
             userCode = itemView.findViewById(R.id.userCode);

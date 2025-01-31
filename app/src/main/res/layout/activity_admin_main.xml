@@ -8,32 +8,25 @@
     tools:context=".AdminMainActivity">
 
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="330dp"
-        android:layout_height="304dp"
-        android:layout_marginBottom="344dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="CalendarClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <Button
         android:id="@+id/workerListButton"
         android:layout_width="327dp"
         android:layout_height="48dp"
         android:text="Список работников"
-        app:layout_constraintEnd_toEndOf="@+id/calendarView"
-        app:layout_constraintStart_toStartOf="@+id/calendarView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="19dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="328dp"
-        android:layout_height="322dp"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="403dp" />
+        android:id="@+id/address_list_recycler"
+        android:layout_width="331dp"
+        android:layout_height="638dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/workerListButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

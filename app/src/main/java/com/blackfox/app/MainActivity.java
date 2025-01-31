@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean userIsAdmin(String loginCode) {
-        boolean userIsAdmin = true;
+        boolean userIsAdmin = false;
 
         return userIsAdmin;
     }

@@ -1,5 +1,6 @@
 package com.blackfox.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.Arrays;
 public class AdminMainActivity extends AppCompatActivity implements AddressChoiceInterface {
 
 
-    Button workerList;
+    Button workerListButton;
     RecyclerView addressListRecycler;
     public final ArrayList<String> addressArray = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
 
@@ -39,11 +40,11 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
             return insets;
         });
 
-        workerList = findViewById(R.id.workerListButton);
-        workerList.setOnClickListener(new View.OnClickListener() {
+        workerListButton = findViewById(R.id.workerListButton);
+        workerListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                goToSlaveList();
             }
         });
 
@@ -65,5 +66,10 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
     @Override
     public void onItemclick(int position) {
 
+    }
+    public void goToSlaveList(){
+        invalidateMenu();
+        Intent intent = new Intent(this, WorkerListActivity.class);
+        startActivity(intent);
     }
 }

@@ -11,11 +11,11 @@
 
     <ImageView
         android:id="@+id/myImageView"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="470dp"
+        android:layout_height="416dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="112dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/logooo"

@@ -31,6 +31,7 @@
         android:layout_marginBottom="144dp"
         android:backgroundTint="@color/orange"
         android:text="Войти"
+        android:fontFamily="serif"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/codeInputField"
@@ -44,12 +45,13 @@
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/orange"
         android:hint="Введите код"
+        android:fontFamily="serif"
         android:inputType="text"
         android:textColor="@color/orange"
         android:textColorHint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

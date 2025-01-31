@@ -5,13 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     tools:context=".WorkerMainActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="311dp"
         android:layout_height="163dp"
         android:layout_marginTop="68dp"
-        app:cardBackgroundColor="@color/black1"
+        app:cardBackgroundColor="@color/black2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +33,7 @@
 
                 android:layout_marginBottom="98dp"
                 android:text="Time"
-                android:textColor="@color/kindaWhite"
+                android:textColor="@color/white"
                 android:textSize="38sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +52,7 @@
                 android:layout_marginBottom="2dp"
 
                 android:text="Address"
-                android:textColor="@color/kindaWhite"
+                android:textColor="@color/orange"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -70,13 +71,15 @@
                 android:layout_marginBottom="59dp"
 
                 android:text="Date"
-                android:textColor="@color/kindaWhite"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
                 tools:text=" 31 февраля" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,7 +90,7 @@
         android:layout_width="309dp"
         android:layout_height="412dp"
         android:layout_marginTop="312dp"
-        android:background="@color/black1"
+        android:background="@color/black2"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"

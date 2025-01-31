@@ -3,6 +3,7 @@ package com.blackfox.app;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class AdminMainActivity extends AppCompatActivity {
 
     CalendarView calendarView;
+    Button workerList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,16 @@ public class AdminMainActivity extends AppCompatActivity {
             return insets;
         });
 
+        workerList = findViewById(R.id.workerListButton);
+        workerList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -39,5 +51,6 @@ public class AdminMainActivity extends AppCompatActivity {
     }
 
     public void CalendarClick(View view) {
+
     }
 }

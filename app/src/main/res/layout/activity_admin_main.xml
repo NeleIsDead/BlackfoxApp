@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/workerListButton"
         android:layout_width="327dp"
         android:layout_height="48dp"
         android:text="Список работников"

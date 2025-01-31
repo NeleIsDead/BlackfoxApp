@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     tools:context=".WorkerListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/black2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -24,6 +26,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Добавить Работника"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:textColor="@color/black2"
+        android:backgroundTint="@color/orange"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintHorizontal_bias="0.5"
@@ -36,9 +43,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Удалить Работника"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textStyle="bold"
+        android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        android:textColor="@color/black2"
+        android:backgroundTint="@color/orange"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />

@@ -51,7 +51,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Не админ"
+                android:text="Код пользователя хз как"
                 tools:layout_editor_absoluteX="168dp"
                 tools:layout_editor_absoluteY="65dp" />
 

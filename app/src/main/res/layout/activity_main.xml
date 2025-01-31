@@ -5,7 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/myImageView"
+        android:layout_width="250dp"
+        android:layout_height="253dp"
+        android:layout_gravity="center_horizontal"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/blackfoxlogo"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="126dp" />
 
     <Button
         android:id="@+id/loginButton"
@@ -13,6 +26,8 @@
         android:layout_height="44dp"
         android:layout_marginBottom="144dp"
         android:text="Войти"
+        android:backgroundTint="@color/orange"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/codeInputField"
         app:layout_constraintHorizontal_bias="0.0"
@@ -24,20 +39,14 @@
         android:layout_height="42dp"
         android:layout_marginBottom="32dp"
         android:hint="Введите код"
+        android:textColor="@color/orange"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@color/orange"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageLogo"
-        android:layout_width="244dp"
-        android:layout_height="234dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="84dp"
-        android:src="@drawable/ic_black_fox_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+

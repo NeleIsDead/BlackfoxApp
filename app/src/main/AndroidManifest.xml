@@ -13,6 +13,9 @@
         android:theme="@style/Theme.BlackfoxApp"
         tools:targetApi="31">
         <activity
+            android:name=".WorkerListActivity"
+            android:exported="false" />
+        <activity
             android:name=".WorkerPlaceViewActivity"
             android:exported="false" />
         <activity

@@ -1,19 +1,12 @@
 package com.blackfox.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Converter;
-import retrofit2.Response;
-import retrofit2.Retrofit.Builder;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,12 +19,19 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.Retrofit.Builder;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     Button loginButton;
     EditText inputCode;
+    SharedPreferences sharedPreferences;
+    private static final String CODE_KEY = "saved_code";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,13 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+
+
+
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
+
 
         Retrofit retrofit = new Builder()
                 .baseUrl("https://thereawheel3.pythonanywhere.com")
@@ -51,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
         loginButton = findViewById(R.id.loginButton);
         inputCode = findViewById(R.id.codeInputField);
+
+        sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
+        String savedCode = sharedPreferences.getString(CODE_KEY, "");
+        if (!savedCode.isEmpty()) {
+            inputCode.setText(savedCode); // Вставляем сохраненный код в поле ввода
+        }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,39 +77,29 @@ public class MainActivity extends AppCompatActivity {
                                 String answer = response.body();
                                 Log.d("admawijdijawijdawijawjidijaw", response.body());
                                 Log.d("admawijdijawijdawijawjidijaw", response.body().toString());
-                                if (answer.equals("user")){
+                                if (answer.equals("user")) {
                                     Log.d("main_activity", "going to worker screen");
+                                    saveCode(inputtedCode);
                                     goToWorkerScreen();
-                                }
-                                else if (answer.equals("admin")){
+
+                                } else if (answer.equals("admin")) {
                                     Log.d("main_activity", "going to admin screen");
+                                    saveCode(inputtedCode);
                                     goToAdminScreen();
-                                }
-                                else{
+                                } else {
                                     Log.d("ERROR", "ERROR");
+                                    Snackbar.make(v, "Код неправильный или уже занят", BaseTransientBottomBar.LENGTH_SHORT).show();
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<String> call, Throwable t) {
                                 Log.d("server Error", call.toString());
+                                Snackbar.make(v, "Сервер не отвечает", BaseTransientBottomBar.LENGTH_SHORT).show();
                             }
                         }
                 );
 
-                //if (isCodeValid(inputtedCode)) {
-                //    if (userIsAdmin(inputtedCode)) {
-                //        Log.d("main_activity", "going to admin screen");
-                //        goToAdminScreen();
-
-                //    } else {
-                //        Log.d("main_activity", "going to worker screen");
-                //        goToWorkerScreen();
-                //    }
-
-                //} else {
-                //    Snackbar.make(v, "Код неправильный или уже занят", BaseTransientBottomBar.LENGTH_SHORT).show();
-                //}
             }
         });
 
@@ -111,18 +111,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    private boolean isCodeValid(String loginCode) {
-        boolean isCodeValid = true;
-
-        return isCodeValid;
+    private void saveCode(String code) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(CODE_KEY, code); // Сохраняем код по ключу
+        editor.apply();
     }
 
-    private boolean userIsAdmin(String loginCode) {
-        boolean userIsAdmin = true;
-
-        return userIsAdmin;
-    }
 
     public void goToWorkerScreen() {
         invalidateMenu();

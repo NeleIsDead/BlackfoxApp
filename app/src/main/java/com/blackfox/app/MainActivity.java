@@ -39,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-
-
-
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
         String savedCode = sharedPreferences.getString(CODE_KEY, "");
         if (!savedCode.isEmpty()) {
-            inputCode.setText(savedCode); // Вставляем сохраненный код в поле ввода
+            inputCode.setText(savedCode);
         }
 
         loginButton.setOnClickListener(new View.OnClickListener() {

@@ -15,11 +15,15 @@ import java.util.ArrayList;
 public class UserListArrayAdapter extends RecyclerView.Adapter<UserListArrayAdapter.ViewHolder> {
     Context ctx;
     @NonNull
-    ArrayList<Slave> userList;
+    ArrayList<String> userNames;
+    ArrayList<String> userPhones;
+    ArrayList<String> userCodes;
 
-    public UserListArrayAdapter(Context ctx, @NonNull ArrayList<Slave> userArrayList) {
+    public UserListArrayAdapter(Context ctx, @NonNull ArrayList<String> userArrayList, ArrayList<String> userPhones, ArrayList<String> userCodes) {
         this.ctx = ctx;
-        this.userList = userArrayList;
+        this.userNames = userArrayList;
+        this.userPhones = userPhones;
+        this.userCodes = userCodes;
 
     }
 
@@ -34,17 +38,16 @@ public class UserListArrayAdapter extends RecyclerView.Adapter<UserListArrayAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.phoneNumber.setText(userList.get(position).getPhoneNumber());
-        String userNameT = userList.get(position).getPhoneNumber() + " " + userList.get(position).getLastName();
-        holder.userName.setText(userNameT);
-        holder.userCode.setText(userList.get(position).getCode());
+        holder.phoneNumber.setText(userPhones.get(position));
+        holder.userName.setText(userNames.get(position));
+        holder.userCode.setText(userCodes.get(position));
 
     }
 
 
 
     public int getItemCount() {
-        return userList.size();
+        return userNames.size();
     }
 
 

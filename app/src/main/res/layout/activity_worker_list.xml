@@ -8,50 +8,105 @@
     android:background="@color/gray"
     tools:context=".WorkerListActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userRecyclerView"
-        android:layout_width="407dp"
-        android:layout_height="657dp"
-        android:layout_marginTop="73dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/black2"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/addSlave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Добавить Работника"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textStyle="bold"
-        android:textSize="15dp"
-        android:textColor="@color/black2"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/orange"
-        app:layout_constraintBottom_toTopOf="@+id/userRecyclerView"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Добавить Работника"
+        android:textColor="@color/black2"
+        android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/removeSlave"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/removeSlave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Удалить Работника"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/orange"
         android:fontFamily="sans-serif-condensed-medium"
-        android:textStyle="bold"
+        android:text="Удалить Работника"
+        android:textColor="@color/black2"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/userRecyclerView"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        android:textColor="@color/black2"
-        android:backgroundTint="@color/orange"
         app:layout_constraintStart_toEndOf="@+id/addSlave"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:inputType="text"
+        android:text="ФИО"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="128dp"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:inputType="text"
+        android:text="Номер Телефона"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/isAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Права Админа"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="368dp"
+        android:layout_height="518dp"
+        android:text="Иван Иванов +7 (900) 123-45-67\n
+Мария Петрова +7 (901) 234-56-78\n
+Сергей Кузнецов +7 (902) 345-67-89\n
+Анна Смирнова +7 (903) 456-78-90\n
+Алексей Васильев +7 (904) 567-89-01\n
+Елена Павлова +7 (905) 678-90-12\n
+Дмитрий Соколов +7 (906) 789-01-23\n
+Ольга Морозова +7 (907) 890-12-34\n
+Максим Орлов +7 (908) 901-23-45\n
+Юлия Романова +7 (909) 012-34-56\n
+Андрей Никитин +7 (910) 123-45-67\n
+Татьяна Васильева +7 (911) 234-56-78\n
+Виктор Сергеев +7 (912) 345-67-89\n
+Ксения Федорова +7 (913) 456-78-90\n
+Павел Алексеев +7 (914) 567-89-01\n
+Светлана Михайлова +7 (915) 678-90-12\n
+Денис Андреев +7 (916) 789-01-23\n
+Наталья Николаева +7 (917) 890-12-34\n
+Михаил Борисов +7 (918) 901-23-45\n
+Екатерина Владимирова +7 (919) 012-34-56\n"
+
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="21dp"
+        tools:layout_editor_absoluteY="189dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

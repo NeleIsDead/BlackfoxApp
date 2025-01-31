@@ -40,7 +40,6 @@ public class WorkerListActivity extends AppCompatActivity {
     public ArrayList<Slave> getUserArrayList(ArrayList<Slave> userArrayList) {
 
 
-
         userArrayList.add(new Slave("HBFHB", "fiwehif", "fhweufhwehf", "weiufhiuhfiuh", false));
 
         return userArrayList;

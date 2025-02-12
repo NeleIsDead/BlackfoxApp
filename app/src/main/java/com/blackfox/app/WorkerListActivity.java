@@ -1,5 +1,7 @@
 package com.blackfox.app;
 
+import static com.blackfox.app.MainActivity.RETROFIT_URL;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +16,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.POST;
 
 public class WorkerListActivity extends AppCompatActivity {
 
@@ -24,9 +34,7 @@ public class WorkerListActivity extends AppCompatActivity {
     CheckBox isAdmin;
     RecyclerView userRecyclerView;
 
-    ArrayList<String> userNames;
-    ArrayList<String> userPhones;
-    ArrayList<String> userCodes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +46,21 @@ public class WorkerListActivity extends AppCompatActivity {
             return insets;
         });
 
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(RETROFIT_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        API api = retrofit.create(API.class);
+
+        String[] userNames = {"Иван Иванов", "Павел Петров", "Мария Кузнецова"};
+        String[] phoneNums = {"+79002227724", "+79002227724", "+79002227724"};
+        boolean[] areAdmins = {true, false, false};
+
+
         userName = findViewById(R.id.userName);
         phoneNum = findViewById(R.id.phoneNumber);
         isAdmin = findViewById(R.id.isAdmin);
@@ -46,25 +69,23 @@ public class WorkerListActivity extends AppCompatActivity {
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName1 = userName.getText().toString();
-                String phoneNum1 = phoneNum.getText().toString();
-                userName.setText("");
-                phoneNum.setText("");
-                //Запрос серверу на добавление юзера
-                userNames.add(userName1);
-                userCodes.add("a");
-                userPhones.add(phoneNum1);
+                if (!(userName.getText().isEmpty()) && !(phoneNum.getText().isEmpty())){
+                    String userName1 = userName.getText().toString();
+                    String phoneNum1 = phoneNum.getText().toString();
+                    //Запрос серверу на добавление юзера
+
+                    userName.setText("");
+                    phoneNum.setText("");
+                }
+
+
+
+
+
+
             }
         });
 
-        //userRecyclerView = findViewById(R.id.userRecyclerView);
-        //userNames = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
-        //userPhones = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
-        //userCodes = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
-
-        //UserListArrayAdapter adapter = new UserListArrayAdapter(this, userNames,userCodes,userPhones);
-        //userRecyclerView.setAdapter(adapter);
-        //userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 

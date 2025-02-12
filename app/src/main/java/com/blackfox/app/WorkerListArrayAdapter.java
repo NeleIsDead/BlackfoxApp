@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class UserListArrayAdapter extends RecyclerView.Adapter<UserListArrayAdapter.ViewHolder> {
+public class WorkerListArrayAdapter extends RecyclerView.Adapter<WorkerListArrayAdapter.ViewHolder> {
     Context ctx;
     @NonNull
     ArrayList<String> userNames;
     ArrayList<String> userPhones;
     ArrayList<String> userCodes;
 
-    public UserListArrayAdapter(Context ctx, @NonNull ArrayList<String> userArrayList, ArrayList<String> userPhones, ArrayList<String> userCodes) {
+    public WorkerListArrayAdapter(Context ctx, @NonNull ArrayList<String> userArrayList, ArrayList<String> userPhones, ArrayList<String> userCodes) {
         this.ctx = ctx;
         this.userNames = userArrayList;
         this.userPhones = userPhones;
@@ -29,10 +29,10 @@ public class UserListArrayAdapter extends RecyclerView.Adapter<UserListArrayAdap
 
     @NonNull
     @Override
-    public UserListArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public WorkerListArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.address_row, parent, false);
-        return new UserListArrayAdapter.ViewHolder(view);
+        return new WorkerListArrayAdapter.ViewHolder(view);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class UserListArrayAdapter extends RecyclerView.Adapter<UserListArrayAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            Log.d("IFH", "IIIINEFIJWNIJFNIJNI");
+            Log.d("WORKERLISTADAPTER", "finding item ids");
             phoneNumber = itemView.findViewById(R.id.phoneNumber);
             userName = itemView.findViewById(R.id.userName);
             userCode = itemView.findViewById(R.id.userCode);

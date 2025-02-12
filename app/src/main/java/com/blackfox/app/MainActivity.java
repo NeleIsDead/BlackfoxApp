@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     EditText inputCode;
     SharedPreferences sharedPreferences;
     private static final String CODE_KEY = "saved_code";
+    String LOG_TAG = "MainActivity";
+    public static final String RETROFIT_URL = "https://thereawheel3.pythonanywhere.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Retrofit retrofit = new Builder()
-                .baseUrl("https://thereawheel3.pythonanywhere.com")
+                .baseUrl(RETROFIT_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         API api = retrofit.create(API.class);
@@ -64,38 +66,43 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String inputtedCode = inputCode.getText().toString();
 
-                ActivateRequest activateRequest = new ActivateRequest(inputtedCode);
+                if (inputtedCode.equals("user")) {
+                    goToWorkerScreen();
+                }
+                else goToAdminScreen();
 
-                Call<String> call = api.activate(activateRequest);
-                call.enqueue(
-                        new Callback<>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                String answer = response.body();
-                                Log.d("admawijdijawijdawijawjidijaw", response.body());
-                                Log.d("admawijdijawijdawijawjidijaw", response.body().toString());
-                                if (answer.equals("user")) {
-                                    Log.d("main_activity", "going to worker screen");
-                                    saveCode(inputtedCode);
-                                    goToWorkerScreen();
-
-                                } else if (answer.equals("admin")) {
-                                    Log.d("main_activity", "going to admin screen");
-                                    saveCode(inputtedCode);
-                                    goToAdminScreen();
-                                } else {
-                                    Log.d("ERROR", "ERROR");
-                                    Snackbar.make(v, "Код неправильный или уже занят", BaseTransientBottomBar.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-                                Log.d("server Error", call.toString());
-                                Snackbar.make(v, "Сервер не отвечает", BaseTransientBottomBar.LENGTH_SHORT).show();
-                            }
-                        }
-                );
+//                ActivateRequest activateRequest = new ActivateRequest(inputtedCode);
+//
+//                Call<String> call = api.activate(activateRequest);
+//                call.enqueue(
+//                        new Callback<>() {
+//                            @Override
+//                            public void onResponse(Call<String> call, Response<String> response) {
+//                                String answer = response.body();
+//                                Log.d(LOG_TAG, response.body());
+//                                Log.d(LOG_TAG, response.body().toString());
+//                                if (answer.equals("user")) {
+//                                    Log.d("main_activity", "going to worker screen");
+//                                    saveCode(inputtedCode);
+//                                    goToWorkerScreen();
+//
+//                                } else if (answer.equals("admin")) {
+//                                    Log.d("main_activity", "going to admin screen");
+//                                    saveCode(inputtedCode);
+//                                    goToAdminScreen();
+//                                } else {
+//                                    Log.d("ERROR", "ERROR");
+//                                    Snackbar.make(v, "Код неправильный или уже занят", BaseTransientBottomBar.LENGTH_SHORT).show();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<String> call, Throwable t) {
+//                                Log.d("server Error", call.toString());
+//                                Snackbar.make(v, "Сервер не отвечает", BaseTransientBottomBar.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                );
 
             }
         });

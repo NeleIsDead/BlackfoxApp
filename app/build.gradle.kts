@@ -8,8 +8,8 @@ android {
 
     defaultConfig {
         applicationId = "com.blackfox.app"
-        minSdk = 25
-        targetSdk = 34
+        minSdk = 35
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

@@ -9,19 +9,44 @@
     tools:context=".WorkerMainActivity">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="311dp"
-        android:layout_height="163dp"
+        android:layout_width="349dp"
+        android:layout_height="419dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="32dp"
+        app:cardBackgroundColor="@color/black2"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/address_list_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="421dp"
+            android:background="@color/black2"
+            app:cardCornerRadius="25dp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="341dp"
+        android:layout_height="192dp"
         android:layout_marginTop="68dp"
         app:cardBackgroundColor="@color/black2"
+        app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="25dp"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/nextWorkTime"
@@ -32,8 +57,8 @@
                 android:layout_marginEnd="62dp"
 
                 android:layout_marginBottom="98dp"
-                android:text="Time"
                 android:fontFamily="serif"
+                android:text="Time"
                 android:textColor="@color/white"
                 android:textSize="38sp"
                 android:textStyle="bold"
@@ -52,6 +77,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
 
+                android:fontFamily="serif"
                 android:text="Address"
                 android:textColor="@color/orange"
                 android:textSize="12sp"
@@ -60,8 +86,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="BLACK FOX (Остановка Октябрьская революция)"
-                android:fontFamily="serif"/>
+                tools:text="BLACK FOX (Остановка Октябрьская революция)" />
 
             <TextView
                 android:id="@+id/nextWorkDate"
@@ -72,34 +97,21 @@
                 android:layout_marginEnd="17dp"
                 android:layout_marginBottom="59dp"
 
+                android:fontFamily="serif"
                 android:text="Date"
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                tools:text=" 31 февраля"
-                android:fontFamily="serif"/>
+                app:layout_constraintVertical_bias="0.0"
+                tools:text=" 31 февраля" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/address_list_recycler"
-        android:layout_width="309dp"
-        android:layout_height="412dp"
-        android:layout_marginTop="312dp"
-        android:background="@color/black2"
-        app:cardCornerRadius="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

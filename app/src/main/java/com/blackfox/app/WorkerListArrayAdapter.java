@@ -14,40 +14,41 @@ import java.util.ArrayList;
 
 public class WorkerListArrayAdapter extends RecyclerView.Adapter<WorkerListArrayAdapter.ViewHolder> {
     Context ctx;
-    @NonNull
-    ArrayList<String> userNames;
-    ArrayList<String> userPhones;
-    ArrayList<String> userCodes;
+    String[] userNames;
+    String[] userPhones;
+    String[] userCodes;
+    boolean[] areAdmins;
 
-    public WorkerListArrayAdapter(Context ctx, @NonNull ArrayList<String> userArrayList, ArrayList<String> userPhones, ArrayList<String> userCodes) {
+
+    public WorkerListArrayAdapter(Context ctx, String[] userNames, String[] userPhones, String[] userCodes, boolean[] areAdmins) {
         this.ctx = ctx;
-        this.userNames = userArrayList;
+        this.userNames = userNames;
         this.userPhones = userPhones;
         this.userCodes = userCodes;
-
+        this.areAdmins = areAdmins;
     }
 
     @NonNull
     @Override
     public WorkerListArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
-        View view = inflater.inflate(R.layout.address_row, parent, false);
+        View view = inflater.inflate(R.layout.worker_list_row, parent, false);
         return new WorkerListArrayAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WorkerListArrayAdapter.ViewHolder holder, int position) {
 
-        holder.phoneNumber.setText(userPhones.get(position));
-        holder.userName.setText(userNames.get(position));
-        holder.userCode.setText(userCodes.get(position));
+        holder.phoneNumber.setText(userPhones[position]);
+        holder.userName.setText(userNames[position]);
+        holder.userCode.setText(userCodes[position]);
 
     }
 
 
 
     public int getItemCount() {
-        return userNames.size();
+        return userNames.length;
     }
 
 

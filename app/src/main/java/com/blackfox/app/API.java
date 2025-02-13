@@ -17,6 +17,9 @@ public interface API {
     //@POST("/selectWorkersCount")
     //Call<List<Integer>> selectWorkersCount(@Body SelectWorkersCountRequest request);
 
+    //@POST("/getUserList")
+    //Call<>
+
     @POST("/activate")
     Call<String> activate(@Body ActivateRequest request);
 

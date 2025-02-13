@@ -57,13 +57,20 @@ public class WorkerListActivity extends AppCompatActivity {
         API api = retrofit.create(API.class);
 
         String[] userNames = {"Иван Иванов", "Павел Петров", "Мария Кузнецова"};
-        String[] phoneNums = {"+79002227724", "+79002227724", "+79002227724"};
+        String[] userPhones = {"+79002227724", "+79002227724", "+79002227724"};
+        String[] userCodes = {"97987897989", "97987897989", "97987897989"};
         boolean[] areAdmins = {true, false, false};
-
 
         userName = findViewById(R.id.userName);
         phoneNum = findViewById(R.id.phoneNumber);
         isAdmin = findViewById(R.id.isAdmin);
+        userRecyclerView = findViewById(R.id.userListRecyclerView);
+
+
+        WorkerListArrayAdapter adapter = new WorkerListArrayAdapter(this, userNames, userPhones, userCodes, areAdmins);
+        userRecyclerView.setAdapter(adapter);
+        userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         addUserButton = findViewById(R.id.addSlave);
         addUserButton.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +84,6 @@ public class WorkerListActivity extends AppCompatActivity {
                     userName.setText("");
                     phoneNum.setText("");
                 }
-
 
 
 

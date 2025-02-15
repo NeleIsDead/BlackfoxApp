@@ -2,6 +2,7 @@ package com.blackfox.app;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,6 +16,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.POST;
@@ -32,6 +37,8 @@ public class WorkerListActivity extends AppCompatActivity {
     EditText userName, phoneNum;
     CheckBox isAdmin;
     RecyclerView userRecyclerView;
+
+    String LOG_TAG = "WorkerListActivity";
 
 
     @Override
@@ -54,6 +61,8 @@ public class WorkerListActivity extends AppCompatActivity {
                 .build();
         API api = retrofit.create(API.class);
 
+
+        //Здесь запросить с сервера списки людей
         String[] userNames = {"Иван Иванов", "Павел Петров", "Мария Кузнецова"};
         String[] userPhones = {"+79002227724", "+79002227724", "+79002227724"};
         String[] userCodes = {"97987897989", "97987897989", "97987897989"};
@@ -73,11 +82,28 @@ public class WorkerListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!(userName.getText().length() == 0) && !(phoneNum.getText().length() == 0)){
-                    String userName1 = userName.getText().toString();
-                    String phoneNum1 = phoneNum.getText().toString();
-                    //Запрос серверу на добавление юзера
-                    userName.setText("");
-                    phoneNum.setText("");
+
+                    Call<String> call = api.addUser(new User(userName.getText().toString(),
+                                                            phoneNum.getText().toString(),
+                                                            isAdmin.isActivated()
+                    ));
+                    call.enqueue(
+                            new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    Log.d(LOG_TAG, "Added user :thumbs_up_emoji:");
+                                    userName.setText("");
+                                    phoneNum.setText("");
+                                    isAdmin.setActivated(false);
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Log.d(LOG_TAG, "User not added, fuck you");
+                                    Snackbar.make(v, "Произошла ошибка, пользователь не добавлен", BaseTransientBottomBar.LENGTH_SHORT).show();
+                                }
+                            }
+                    );
                 }
             }
         });

@@ -18,12 +18,12 @@ import java.util.Arrays;
 public class AddressListArrayAdapter extends RecyclerView.Adapter<AddressListArrayAdapter.ViewHolder> implements AddressChoiceInterface {
     Context ctx;
     @NonNull
-    ArrayList<String> addressList;
+    ArrayList<Place> addressList;
     private final AddressChoiceInterface addressChoiceInterface;
 
-    public AddressListArrayAdapter(Context ctx, @NonNull ArrayList<String> serverArrayList, AddressChoiceInterface addressChoiceInterface) {
+    public AddressListArrayAdapter(Context ctx, @NonNull ArrayList<Place> addressList, AddressChoiceInterface addressChoiceInterface) {
         this.ctx = ctx;
-        this.addressList = serverArrayList;
+        this.addressList = addressList;
         this.addressChoiceInterface = addressChoiceInterface;
     }
 
@@ -38,7 +38,7 @@ public class AddressListArrayAdapter extends RecyclerView.Adapter<AddressListArr
     @Override
     public void onBindViewHolder(@NonNull AddressListArrayAdapter.ViewHolder holder, int position) {
         Log.d("Recycler", "setting text");
-        holder.addressText.setText(addressList.get(position));
+        holder.addressText.setText(addressList.get(position).getAddressString());
     }
 
     @Override

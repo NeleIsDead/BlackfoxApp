@@ -19,19 +19,25 @@
         app:layout_constraintVertical_bias="1.0">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="382dp"
-            android:layout_height="463dp"
+            android:id="@+id/cardView"
+            android:layout_width="365dp"
+            android:layout_height="495dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="242dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="29dp"
+            app:cardCornerRadius="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
-            app:layout_constraintVertical_bias="0.5">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userListRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/black2">
 
             </androidx.recyclerview.widget.RecyclerView>
         </androidx.cardview.widget.CardView>
@@ -42,16 +48,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="215dp"
-            android:layout_marginBottom="670dp"
             android:backgroundTint="@color/orange"
             android:fontFamily="sans-serif-condensed-medium"
             android:text="Добавить Работника"
             android:textColor="@color/black2"
             android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,17 +61,15 @@
             android:id="@+id/removeSlave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
+            android:layout_marginStart="223dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="670dp"
             android:backgroundTint="@color/orange"
             android:fontFamily="sans-serif-condensed-medium"
             android:text="Удалить Работника"
             android:textColor="@color/black2"
             android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/addSlave"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -85,40 +85,42 @@
             android:text="Номер Телефона"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/isAdmin"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="93dp"
-            android:layout_marginBottom="596dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:ems="10"
             android:fontFamily="sans-serif-condensed-medium"
             android:inputType="text"
             android:text="ФИО"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/phoneNumber"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/addSlave"
+            app:layout_constraintVertical_bias="0.0" />
 
         <CheckBox
             android:id="@+id/isAdmin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="262dp"
-            android:layout_marginTop="124dp"
             android:layout_marginEnd="26dp"
-            android:layout_marginBottom="562dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:text="Права Админа"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/userName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/removeSlave" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

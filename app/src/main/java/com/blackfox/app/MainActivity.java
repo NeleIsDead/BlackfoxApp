@@ -26,7 +26,7 @@ import retrofit2.Retrofit;
 import retrofit2.Retrofit.Builder;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     Button loginButton;
     EditText inputCode;
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 .setLenient()
                 .create();
 
-
         Retrofit retrofit = new Builder()
                 .baseUrl(getString(R.string.server_address))
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -57,52 +56,50 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
         String savedCode = sharedPreferences.getString(CODE_KEY, "");
         if (!savedCode.isEmpty()) {
-            inputCode.setText(savedCode);
+            if (savedCode.equals("admin")){
+                goToAdminScreen();
+            } else if (savedCode.equals("worker")) {
+                goToWorkerScreen();
+            }
         }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inputtedCode = inputCode.getText().toString();
+                Code inputtedCode = new Code(inputCode.getText().toString());
 
-                if (inputtedCode.equals("user")) {
-                    goToWorkerScreen();
-                }
-                else goToAdminScreen();
+//                if (inputtedCode.equals("user")) {
+//                    goToWorkerScreen();
+//                }
+//                else goToAdminScreen();
 
-//                ActivateRequest activateRequest = new ActivateRequest(inputtedCode);
-//
-//                Call<String> call = api.activate(activateRequest);
-//                call.enqueue(
-//                        new Callback<>() {
-//                            @Override
-//                            public void onResponse(Call<String> call, Response<String> response) {
-//                                String answer = response.body();
-//                                Log.d(LOG_TAG, response.body());
-//                                Log.d(LOG_TAG, response.body().toString());
-//                                if (answer.equals("user")) {
-//                                    Log.d("main_activity", "going to worker screen");
-//                                    saveCode(inputtedCode);
-//                                    goToWorkerScreen();
-//
-//                                } else if (answer.equals("admin")) {
-//                                    Log.d("main_activity", "going to admin screen");
-//                                    saveCode(inputtedCode);
-//                                    goToAdminScreen();
-//                                } else {
-//                                    Log.d("ERROR", "ERROR");
-//                                    Snackbar.make(v, "Код неправильный или уже занят", BaseTransientBottomBar.LENGTH_SHORT).show();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<String> call, Throwable t) {
-//                                Log.d("server Error", call.toString());
-//                                Snackbar.make(v, "Сервер не отвечает", BaseTransientBottomBar.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                );
+                Call<User> call = api.activate(inputtedCode);
+                call.enqueue(
+                        new Callback<>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if (response.body() != null){
+                                    Log.d(LOG_TAG, response.toString());
+                                    User user = response.body();
 
+                                    if (!user.isAdmin) {
+                                        Log.d("main_activity", "going to worker screen");
+                                        saveCode(user.isAdmin());
+                                        goToWorkerScreen();
+                                    } else if (user.isAdmin) {
+                                        Log.d("main_activity", "going to admin screen");
+                                        saveCode(user.isAdmin());
+                                        goToAdminScreen();
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Log.d("server Error", call.toString());
+                                Snackbar.make(v, "Сервер не отвечает", BaseTransientBottomBar.LENGTH_SHORT).show();
+                            }
+                        }
+                );
             }
         });
 
@@ -114,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void saveCode(String code) {
+    private void saveCode(boolean isAdmin) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(CODE_KEY, code); // Сохраняем код по ключу
+        editor.putBoolean(CODE_KEY, isAdmin);
         editor.apply();
     }
 

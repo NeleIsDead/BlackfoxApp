@@ -38,7 +38,6 @@ public class WorkerListArrayAdapter extends RecyclerView.Adapter<WorkerListArray
 
     @Override
     public void onBindViewHolder(@NonNull WorkerListArrayAdapter.ViewHolder holder, int position) {
-
         holder.phoneNumber.setText(userPhones[position]);
         holder.userName.setText(userNames[position]);
         holder.userCode.setText(userCodes[position]);

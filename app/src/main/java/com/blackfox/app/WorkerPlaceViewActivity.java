@@ -27,7 +27,6 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
     public int workersForFirstShift,workersForSecondShift;
 
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +44,7 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         secondShiftWorkerNum = findViewById(R.id.workersForSecondShift);
         enrollFirstShift = findViewById(R.id.enrollFirstShift);
         enrollSecondShift = findViewById(R.id.enrollSecondShift);
+
         addressTextView.setText(bundle.getString("address"));
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

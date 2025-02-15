@@ -1,6 +1,5 @@
 package com.blackfox.app;
 
-import static com.blackfox.app.MainActivity.RETROFIT_URL;
 
 import android.os.Bundle;
 import android.view.View;
@@ -46,12 +45,11 @@ public class WorkerListActivity extends AppCompatActivity {
             return insets;
         });
 
-
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(RETROFIT_URL)
+                .baseUrl(getString(R.string.server_address))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         API api = retrofit.create(API.class);
@@ -66,29 +64,21 @@ public class WorkerListActivity extends AppCompatActivity {
         isAdmin = findViewById(R.id.isAdmin);
         userRecyclerView = findViewById(R.id.userListRecyclerView);
 
-
         WorkerListArrayAdapter adapter = new WorkerListArrayAdapter(this, userNames, userPhones, userCodes, areAdmins);
         userRecyclerView.setAdapter(adapter);
         userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         addUserButton = findViewById(R.id.addSlave);
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(userName.getText().isEmpty()) && !(phoneNum.getText().isEmpty())){
+                if (!(userName.getText().length() == 0) && !(phoneNum.getText().length() == 0)){
                     String userName1 = userName.getText().toString();
                     String phoneNum1 = phoneNum.getText().toString();
                     //Запрос серверу на добавление юзера
-
                     userName.setText("");
                     phoneNum.setText("");
                 }
-
-
-
-
-
             }
         });
 

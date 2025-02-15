@@ -31,9 +31,8 @@ public class MainActivity extends AppCompatActivity {
     Button loginButton;
     EditText inputCode;
     SharedPreferences sharedPreferences;
-    private static final String CODE_KEY = "saved_code";
+    private final String CODE_KEY = "saved_code";
     String LOG_TAG = "MainActivity";
-    public static final String RETROFIT_URL = "https://thereawheel3.pythonanywhere.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Retrofit retrofit = new Builder()
-                .baseUrl(RETROFIT_URL)
+                .baseUrl(getString(R.string.server_address))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         API api = retrofit.create(API.class);

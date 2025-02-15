@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">BlackfoxApp</string>
-
+    <string name="server_address">https://thereawheel3.pythonanywhere.com</string>
 </resources>

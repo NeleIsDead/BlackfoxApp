@@ -2,8 +2,11 @@
 
 public class User{
     @JsonProperty("FIO") 
+    
     public String fIO;
+    
     public String phone;
+    
     public boolean isAdmin;
 }
 

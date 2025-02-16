@@ -90,11 +90,9 @@ public class MainActivity extends AppCompatActivity{
                                     User user = response.body();
 
                                     if (user.isAdmin) {
-
                                         saveCode(inputtedCode.getCode(), false);
                                         goToAdminScreen();
                                     } else {
-
                                         saveCode(inputtedCode.getCode(), true);
                                         goToWorkerScreen();
                                     }

@@ -14,18 +14,12 @@ import java.util.ArrayList;
 
 public class WorkerListArrayAdapter extends RecyclerView.Adapter<WorkerListArrayAdapter.ViewHolder> {
     Context ctx;
-    String[] userNames;
-    String[] userPhones;
-    String[] userCodes;
-    boolean[] areAdmins;
+    ArrayList<CoolerUser> userArrayList;
 
 
-    public WorkerListArrayAdapter(Context ctx, String[] userNames, String[] userPhones, String[] userCodes, boolean[] areAdmins) {
+    public WorkerListArrayAdapter(Context ctx, ArrayList<CoolerUser> userArrayList) {
         this.ctx = ctx;
-        this.userNames = userNames;
-        this.userPhones = userPhones;
-        this.userCodes = userCodes;
-        this.areAdmins = areAdmins;
+        this.userArrayList = userArrayList;
     }
 
     @NonNull
@@ -38,16 +32,16 @@ public class WorkerListArrayAdapter extends RecyclerView.Adapter<WorkerListArray
 
     @Override
     public void onBindViewHolder(@NonNull WorkerListArrayAdapter.ViewHolder holder, int position) {
-        holder.phoneNumber.setText(userPhones[position]);
-        holder.userName.setText(userNames[position]);
-        holder.userCode.setText(userCodes[position]);
+        holder.phoneNumber.setText(userArrayList.get(position).getPhone());
+        holder.userName.setText(userArrayList.get(position).getFIO());
+        holder.userCode.setText(userArrayList.get(position).getCode());
 
     }
 
 
 
     public int getItemCount() {
-        return userNames.length;
+        return userArrayList.size();
     }
 
 
@@ -56,7 +50,7 @@ public class WorkerListArrayAdapter extends RecyclerView.Adapter<WorkerListArray
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            Log.d("WORKERLISTADAPTER", "finding item ids");
+            Log.d("WORKER_LIST_ADAPTER", "finding item ids");
             phoneNumber = itemView.findViewById(R.id.phoneNumber);
             userName = itemView.findViewById(R.id.userName);
             userCode = itemView.findViewById(R.id.userCode);

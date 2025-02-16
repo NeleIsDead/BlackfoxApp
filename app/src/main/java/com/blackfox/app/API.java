@@ -25,6 +25,8 @@ public interface API {
     //@POST("/getUserList")
     //Call<>
 
+    @GET("/allUsers")
+    Call<ArrayList<CoolerUser>> getAllUsers();
     @POST("/activate")
     Call<User> activate(@Body Code code);
 
@@ -32,14 +34,14 @@ public interface API {
     Call<String> addUser(@Body User user);
 
     @GET("/allPlaces")
-    Call<Places> getPlaces();
+    Call<ArrayList<Place>> getPlaces();
 
-    //@POST("/nearestTime")
-    //Call<List<String>> nearestTime(@Body NearestTimeRequest request);
+    @POST("/nearest")
+    Call<Time> nearestShift(@Body Code code);
 }
 
 class User {
-    @JsonProperty("FIO")
+
     public String fio;
     public String phone;
     public boolean isAdmin;
@@ -48,6 +50,7 @@ class User {
         this.fio = fio;
         this.phone = phone;
         this.isAdmin = isAdmin;
+
     }
 
     public String getFio() {
@@ -60,6 +63,35 @@ class User {
 
     public boolean isAdmin() {
         return isAdmin;
+    }
+}
+
+//User Class with more info in it
+class CoolerUser {
+    private String phone;
+    private boolean isAdmin;
+    private String FIO;
+    private String code;
+    private boolean isActivated;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public String getFIO() {
+        return FIO;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
     }
 }
 
@@ -91,9 +123,10 @@ class Place {
     private String mid;
     private String end;
 
-    public Place(String address, String start, String end) {
+    public Place(String address, String start, String mid, String end) {
         this.address = address;
         this.start = start;
+        this.mid = mid;
         this.end = end;
     }
 
@@ -128,4 +161,3 @@ class Data {
     private int first;
     private int second;
 }
-

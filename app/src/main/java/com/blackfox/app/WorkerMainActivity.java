@@ -49,7 +49,6 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
 
         parseNextWorkTime(nextWorkDate, nextWorkTime, nextWorkPlace);
 
-        RecyclerView addressListRecycler = findViewById(R.id.address_list_recycler);
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -62,23 +61,28 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
 
 
 
-        Call<Places> call = api.getPlaces();
-        call.enqueue(new Callback<Places>() {
+        RecyclerView addressListRecycler = findViewById(R.id.address_list_recycler);
+
+        Call<ArrayList<Place>> call = api.getPlaces();
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<Places> call, Response<Places> response) {
-                addressArray = response.body().getPlaces();
+            public void onResponse(Call<ArrayList<Place>> call, Response<ArrayList<Place>> response) {
+                Log.d(LOG_TAG, "AAAAA");
+                Log.d(LOG_TAG, response.body().toString());
+                addressArray = response.body();
+
+                AddressListArrayAdapter adapter = new AddressListArrayAdapter(WorkerMainActivity.this, addressArray, WorkerMainActivity.this);
+                addressListRecycler.setAdapter(adapter);
+                addressListRecycler.setLayoutManager(new LinearLayoutManager(WorkerMainActivity.this));
             }
 
             @Override
-            public void onFailure(Call<Places> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Place>> call, Throwable t) {
                 Log.d(LOG_TAG, "Failed to retrieve places array");
+                Log.d(LOG_TAG, t.getMessage());
             }
         });
 
-
-        AddressListArrayAdapter adapter = new AddressListArrayAdapter(this, addressArray, this);
-        addressListRecycler.setAdapter(adapter);
-        addressListRecycler.setLayoutManager(new LinearLayoutManager(this));
 
 
     }

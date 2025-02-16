@@ -62,6 +62,7 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
         API api = retrofit.create(API.class);
 
         workerListButton = findViewById(R.id.workerListButton);
+
         workerListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,31 +70,31 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
             }
         });
 
-        Log.d(LOG_TAG, "AAAAA");
-        Call<Places> call = api.getPlaces();
-        call.enqueue(new Callback<Places>() {
+        Log.d(LOG_TAG, "Initializing recyclerview");
+
+        addressListRecycler = findViewById(R.id.address_list_recycler);
+        Call<ArrayList<Place>> call = api.getPlaces();
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<Places> call, Response<Places> response) {
-                Log.d(LOG_TAG, "AAAAA");
+            public void onResponse(Call<ArrayList<Place>> call, Response<ArrayList<Place>> response) {
+
+                Log.d(LOG_TAG, "Recieved Places Arraylist from server:");
                 Log.d(LOG_TAG, response.body().toString());
-                addressArray = response.body().getPlaces();
+                addressArray = response.body();
+
+                AddressListArrayAdapter adapter = new AddressListArrayAdapter(AdminMainActivity.this, addressArray, AdminMainActivity.this);
+                addressListRecycler.setAdapter(adapter);
+                addressListRecycler.setLayoutManager(new LinearLayoutManager(AdminMainActivity.this));
             }
 
             @Override
-            public void onFailure(Call<Places> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Place>> call, Throwable t) {
                 Log.d(LOG_TAG, "Failed to retrieve places array");
+                Log.d(LOG_TAG, t.getMessage());
             }
         });
 
-        addressListRecycler = findViewById(R.id.address_list_recycler);
-
-        AddressListArrayAdapter adapter = new AddressListArrayAdapter(this, addressArray, this);
-        addressListRecycler.setAdapter(adapter);
-        addressListRecycler.setLayoutManager(new LinearLayoutManager(this));
-
-
     }
-
 
     @Override
     public void onItemclick(int position) {
@@ -107,7 +108,7 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
     }
     public void goToSlaveList(){
         invalidateMenu();
-        Intent intent = new Intent(this, WorkerListActivity.class);
+        Intent intent = new Intent(this, AdminViewWorkerListActivity.class);
         startActivity(intent);
     }
 

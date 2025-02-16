@@ -31,14 +31,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.POST;
 
-public class WorkerListActivity extends AppCompatActivity {
+public class AdminViewWorkerListActivity extends AppCompatActivity {
 
     Button addUserButton;
     EditText userName, phoneNum;
     CheckBox isAdmin;
     RecyclerView userRecyclerView;
 
-    String LOG_TAG = "WorkerListActivity";
+    ArrayList<CoolerUser> userArrayList;
+
+    String LOG_TAG = "AdminViewWorkerListActivity";
 
 
     @Override
@@ -61,21 +63,34 @@ public class WorkerListActivity extends AppCompatActivity {
                 .build();
         API api = retrofit.create(API.class);
 
-
-        //Здесь запросить с сервера списки людей
-        String[] userNames = {"Иван Иванов", "Павел Петров", "Мария Кузнецова"};
-        String[] userPhones = {"+79002227724", "+79002227724", "+79002227724"};
-        String[] userCodes = {"97987897989", "97987897989", "97987897989"};
-        boolean[] areAdmins = {true, false, false};
-
         userName = findViewById(R.id.userName);
         phoneNum = findViewById(R.id.phoneNumber);
         isAdmin = findViewById(R.id.isAdmin);
         userRecyclerView = findViewById(R.id.userListRecyclerView);
 
-        WorkerListArrayAdapter adapter = new WorkerListArrayAdapter(this, userNames, userPhones, userCodes, areAdmins);
-        userRecyclerView.setAdapter(adapter);
-        userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Call<ArrayList<CoolerUser>> call = api.getAllUsers();
+        call.enqueue(new Callback<ArrayList<CoolerUser>>() {
+            @Override
+            public void onResponse(Call<ArrayList<CoolerUser>> call, Response<ArrayList<CoolerUser>> response) {
+
+                Log.d(LOG_TAG, "Recieved Places Arraylist from server:");
+                Log.d(LOG_TAG, response.body().toString());
+                userArrayList = response.body();
+
+                WorkerListArrayAdapter adapter = new WorkerListArrayAdapter(AdminViewWorkerListActivity.this, userArrayList);
+                userRecyclerView.setAdapter(adapter);
+                userRecyclerView.setLayoutManager(new LinearLayoutManager(AdminViewWorkerListActivity.this));
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<CoolerUser>> call, Throwable t) {
+
+            }
+        });
+
+
+
+
 
         addUserButton = findViewById(R.id.addSlave);
         addUserButton.setOnClickListener(new View.OnClickListener() {

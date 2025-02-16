@@ -43,6 +43,7 @@ public class AddressListArrayAdapter extends RecyclerView.Adapter<AddressListArr
 
     @Override
     public int getItemCount() {
+        Log.d("Recycler", addressList.toString());
         return addressList.size();
     }
 

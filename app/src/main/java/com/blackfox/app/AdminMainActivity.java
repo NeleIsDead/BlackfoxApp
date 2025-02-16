@@ -61,11 +61,21 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
                 .build();
         API api = retrofit.create(API.class);
 
+        workerListButton = findViewById(R.id.workerListButton);
+        workerListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSlaveList();
+            }
+        });
 
+        Log.d(LOG_TAG, "AAAAA");
         Call<Places> call = api.getPlaces();
         call.enqueue(new Callback<Places>() {
             @Override
             public void onResponse(Call<Places> call, Response<Places> response) {
+                Log.d(LOG_TAG, "AAAAA");
+                Log.d(LOG_TAG, response.body().toString());
                 addressArray = response.body().getPlaces();
             }
 
@@ -75,18 +85,7 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
             }
         });
 
-        workerListButton = findViewById(R.id.workerListButton);
-        workerListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToSlaveList();
-            }
-        });
-
-
-
         addressListRecycler = findViewById(R.id.address_list_recycler);
-
 
         AddressListArrayAdapter adapter = new AddressListArrayAdapter(this, addressArray, this);
         addressListRecycler.setAdapter(adapter);

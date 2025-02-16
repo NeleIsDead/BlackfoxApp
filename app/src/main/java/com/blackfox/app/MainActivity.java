@@ -1,5 +1,6 @@
 package com.blackfox.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +34,8 @@ public class MainActivity extends AppCompatActivity{
     Button loginButton;
     EditText inputCode;
     SharedPreferences sharedPreferences;
-    private final String CODE_KEY = "saved_code";
+    private final String CODE_KEY_STRING = "savedUserDataString";
+    private final String CODE_KEY_BOOLEAN = "savedUserDataBoolean";
     String LOG_TAG = "MainActivity";
 
     @Override
@@ -54,11 +58,14 @@ public class MainActivity extends AppCompatActivity{
         inputCode = findViewById(R.id.codeInputField);
 
         sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
-        String savedCode = sharedPreferences.getString(CODE_KEY, "");
+
+        String savedCode = sharedPreferences.getString(CODE_KEY_STRING, "");
+        boolean isSavedUserAdmin = sharedPreferences.getBoolean(CODE_KEY_BOOLEAN, false);
+
         if (!savedCode.isEmpty()) {
-            if (savedCode.equals("admin")){
+            if (isSavedUserAdmin){
                 goToAdminScreen();
-            } else if (savedCode.equals("worker")) {
+            } else{
                 goToWorkerScreen();
             }
         }
@@ -82,20 +89,22 @@ public class MainActivity extends AppCompatActivity{
                                     Log.d(LOG_TAG, response.toString());
                                     User user = response.body();
 
-                                    if (!user.isAdmin) {
-                                        Log.d("main_activity", "going to worker screen");
-                                        saveCode(user.isAdmin());
-                                        goToWorkerScreen();
-                                    } else if (user.isAdmin) {
-                                        Log.d("main_activity", "going to admin screen");
-                                        saveCode(user.isAdmin());
+                                    if (user.isAdmin) {
+
+                                        saveCode(inputtedCode.getCode(), false);
                                         goToAdminScreen();
+                                    } else {
+
+                                        saveCode(inputtedCode.getCode(), true);
+                                        goToWorkerScreen();
                                     }
+                                }else {
+                                    Snackbar.make(v, "Произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
                                 }
                             }
                             @Override
                             public void onFailure(Call<User> call, Throwable t) {
-                                Log.d("server Error", call.toString());
+                                Log.d("server Error", Objects.requireNonNull(t.getMessage()));
                                 Snackbar.make(v, "Сервер не отвечает", BaseTransientBottomBar.LENGTH_SHORT).show();
                             }
                         }
@@ -111,20 +120,23 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-    private void saveCode(boolean isAdmin) {
+    private void saveCode(String name, boolean isAdmin) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(CODE_KEY, isAdmin);
+        editor.putString(CODE_KEY_STRING, name);
+        editor.putBoolean(CODE_KEY_BOOLEAN, isAdmin);
         editor.apply();
     }
 
 
     public void goToWorkerScreen() {
+        Log.d("main_activity", "going to worker screen");
         invalidateMenu();
         Intent intent = new Intent(this, WorkerMainActivity.class);
         startActivity(intent);
     }
 
     public void goToAdminScreen() {
+        Log.d("main_activity", "going to admin screen");
         invalidateMenu();
         Intent intent = new Intent(this, AdminMainActivity.class);
         startActivity(intent);

@@ -37,7 +37,8 @@ public interface API {
     //@POST("/nearestTime")
     //Call<List<String>> nearestTime(@Body NearestTimeRequest request);
 }
-class User{
+
+class User {
     @JsonProperty("FIO")
     public String fio;
     public String phone;
@@ -61,8 +62,9 @@ class User{
         return isAdmin;
     }
 }
-class Code{
-    public String code;
+
+class Code {
+    private String code;
 
     public Code(String code) {
         this.code = code;
@@ -86,6 +88,7 @@ class Place {
     //GET request
     private String address;
     private String start;
+    private String mid;
     private String end;
 
     public Place(String address, String start, String end) {

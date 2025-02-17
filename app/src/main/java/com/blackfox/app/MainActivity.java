@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-    private void saveCode(String name, boolean isAdmin) {
+    private void saveCode(String code, boolean isAdmin) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(CODE_KEY_STRING, name);
+        editor.putString(CODE_KEY_STRING, code);
         editor.putBoolean(CODE_KEY_BOOLEAN, isAdmin);
         editor.apply();
     }

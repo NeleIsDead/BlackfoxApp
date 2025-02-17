@@ -10,67 +10,48 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface API {
-    //@POST("/generateCode")
-    //Call<String> generateCode(@Body GenerateCodeRequest request);
-
-    //@POST("/addTime")
-    //Call<Void> addTime(@Body AddTimeRequest request);
-
-    //@POST("/addPlace")
-    //Call<Void> addPlace(@Body AddPlaceRequest request);
-
-    //@POST("/selectWorkersCount")
-    //Call<List<Integer>> selectWorkersCount(@Body SelectWorkersCountRequest request);
-
-    //@POST("/getUserList")
-    //Call<>
-
-    @GET("/allUsers")
-    Call<ArrayList<CoolerUser>> getAllUsers();
-    @POST("/activate")
-    Call<User> activate(@Body Code code);
-
-    @POST("/addUser")
-    Call<String> addUser(@Body User user);
 
     @GET("/allPlaces")
     Call<ArrayList<Place>> getPlaces();
-
+    @GET("/allUsers")
+    Call<ArrayList<CoolerUser>> getAllUsers();
+    @POST("/addTime")
+    Call<String> enrollForShift(@Body Time time);
+    @POST("/countByTime")
+    Call<Data> getWorkerNumForShift(@Body Count count);
+    @POST("/activate")
+    Call<User> activate(@Body Code code);
+    @POST("/addUser")
+    Call<String> addUser(@Body User user);
     @POST("/nearest")
     Call<Time> nearestShift(@Body Code code);
 }
 
 class User {
-
     public String fio;
     public String phone;
     public boolean isAdmin;
-
     public User(String fio, String phone, boolean isAdmin) {
         this.fio = fio;
         this.phone = phone;
         this.isAdmin = isAdmin;
 
     }
-
     public String getFio() {
         return fio;
     }
-
     public String getPhone() {
         return phone;
     }
-
     public boolean isAdmin() {
         return isAdmin;
     }
 }
-
 //User Class with more info in it
 class CoolerUser {
     private String phone;
     private boolean isAdmin;
-    private String FIO;
+    private String fio;
     private String code;
     private boolean isActivated;
 
@@ -83,7 +64,7 @@ class CoolerUser {
     }
 
     public String getFIO() {
-        return FIO;
+        return fio;
     }
 
     public String getCode() {
@@ -101,22 +82,46 @@ class Code {
     public Code(String code) {
         this.code = code;
     }
-
     public String getCode() {
         return code;
     }
 }
-
 class Time {
     private String code;
     private String address;
-    private int date;
+    private long date;
     private boolean first;
     private boolean second;
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public boolean isFirst() {
+        return first;
+    }
+
+    public boolean isSecond() {
+        return second;
+    }
+
+    public Time(String code, String address, long date, boolean first, boolean second) {
+        this.code = code;
+        this.address = address;
+        this.date = date;
+        this.first = first;
+        this.second = second;
+    }
 }
-
 class Place {
-
     //GET request
     private String address;
     private String start;
@@ -129,23 +134,18 @@ class Place {
         this.mid = mid;
         this.end = end;
     }
-
     public String getAddressString() {
         return address;
     }
-
     public String getStart() {
         return start;
     }
-
     public String getEnd() {
         return end;
     }
 }
-
 class Places {
     private ArrayList<Place> places;
-
     public ArrayList<Place> getPlaces() {
         return places;
     }
@@ -153,11 +153,24 @@ class Places {
 
 
 class Count {
-    int time;
+    long time;
     String address;
+
+    public Count(long time, String address) {
+        this.time = time;
+        this.address = address;
+    }
 }
 
 class Data {
     private int first;
     private int second;
+
+    public int getFirst() {
+        return first;
+    }
+
+    public int getSecond() {
+        return second;
+    }
 }

@@ -1,6 +1,9 @@
 package com.blackfox.app;
 
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.POST;
 
-public class AdminViewWorkerListActivity extends AppCompatActivity {
+public class AdminViewWorkerListActivity extends AppCompatActivity implements WorkerCopyCodeInterface{
 
     Button addUserButton;
     EditText userName, phoneNum;
@@ -77,7 +80,7 @@ public class AdminViewWorkerListActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, response.body().toString());
                 userArrayList = response.body();
 
-                WorkerListArrayAdapter adapter = new WorkerListArrayAdapter(AdminViewWorkerListActivity.this, userArrayList);
+                WorkerListArrayAdapter adapter = new WorkerListArrayAdapter(AdminViewWorkerListActivity.this, userArrayList, AdminViewWorkerListActivity.this);
                 userRecyclerView.setAdapter(adapter);
                 userRecyclerView.setLayoutManager(new LinearLayoutManager(AdminViewWorkerListActivity.this));
             }
@@ -87,10 +90,6 @@ public class AdminViewWorkerListActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
         addUserButton = findViewById(R.id.addSlave);
         addUserButton.setOnClickListener(new View.OnClickListener() {
@@ -125,5 +124,14 @@ public class AdminViewWorkerListActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onItemclick(int position) {
+        Log.d(LOG_TAG, "Copied user Code");
+        String userCode = userArrayList.get(position).getCode();
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(userCode, userCode);
+        clipboard.setPrimaryClip(clip);
+        Snackbar.make(userRecyclerView.getRootView(), "Код пользователя скопирован в буфер обмена", BaseTransientBottomBar.LENGTH_SHORT).show();
+        Log.d(LOG_TAG, "Copied user Code " + userCode);
+    }
 }

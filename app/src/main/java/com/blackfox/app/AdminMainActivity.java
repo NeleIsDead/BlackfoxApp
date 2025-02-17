@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,7 +91,7 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
             @Override
             public void onFailure(Call<ArrayList<Place>> call, Throwable t) {
                 Log.d(LOG_TAG, "Failed to retrieve places array");
-                Log.d(LOG_TAG, t.getMessage());
+                Log.d(LOG_TAG, Objects.requireNonNull(t.getMessage()));
             }
         });
 

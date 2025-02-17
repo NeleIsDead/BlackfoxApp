@@ -1,6 +1,7 @@
 package com.blackfox.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -31,6 +32,8 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
     TextView nextWorkDate, nextWorkTime, nextWorkPlace;
     public final ArrayList<String> addressArrayOld = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
     public final String LOG_TAG = "WorkerMainActivity";
+    SharedPreferences sharedPreferences;
+    private final String CODE_KEY_STRING = "savedUserDataString";
     public ArrayList<Place> addressArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,6 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
         nextWorkPlace = findViewById(R.id.nextWorkPlace);
         nextWorkTime = findViewById(R.id.nextWorkTime);
 
-        parseNextWorkTime(nextWorkDate, nextWorkTime, nextWorkPlace);
-
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -59,12 +60,35 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
                 .build();
         API api = retrofit.create(API.class);
 
+        sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
+        Call<Time> call = api.nearestShift(new Code(sharedPreferences.getString(CODE_KEY_STRING, "")));
+        call.enqueue(new Callback<Time>() {
+            @Override
+            public void onResponse(Call<Time> call, Response<Time> response) {
+
+                if (response.body() != null){
+                    parseNextWorkTime(response.body());
+                } else {
+                    nextWorkTime.setText("Нет смен");
+                    nextWorkDate.setText("Добби свободный эльф");
+                    nextWorkPlace.setText("");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Time> call, Throwable t) {
+
+            }
+        });
+
 
 
         RecyclerView addressListRecycler = findViewById(R.id.address_list_recycler);
 
-        Call<ArrayList<Place>> call = api.getPlaces();
-        call.enqueue(new Callback<>() {
+        Call<ArrayList<Place>> call1 = api.getPlaces();
+        call1.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<ArrayList<Place>> call, Response<ArrayList<Place>> response) {
                 Log.d(LOG_TAG, "AAAAA");
@@ -99,12 +123,12 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
 
     }
 
-    private void parseNextWorkTime(TextView nextWorkDate, TextView nextWorkTime, TextView nextWorkPlace) {
-        //Сделать запрос к серверу чтоб получить дату и чет пошаманить с ней
-        nextWorkPlace.setText("BLACK FOX (Остановка Октябрьская революция)");
-        nextWorkDate.setText("31 февраля");
-        nextWorkTime.setText("16:00 - 00:00");
-
+    private void parseNextWorkTime(Time time) {
+        nextWorkPlace.setText(time.getAddress());
+        String nextDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(time.getDate());
+        String nextTime = new java.text.SimpleDateFormat("HH:mm:ss").format(time.getDate());
+        nextWorkTime.setText(nextDate);
+        nextWorkDate.setText(nextTime);
     }
 
 }

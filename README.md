@@ -73,3 +73,13 @@ public class Time {
     private boolean first;
     private boolean second;
 }
+
+/amIEnrolled post
+
+public class CheckUser {
+    private String code;
+    private int date;
+    private String adress;
+}
+
+true/false

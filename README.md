@@ -1,3 +1,12 @@
+# TODO: 
+
+Fix Security issue with getallUsers 
+
+Fix the fucking UI
+
+
+
+
 /addUser post
 
 public class User{
@@ -35,7 +44,7 @@ public class Time {
     private boolean second;
 }
 
-OK
+OK/already
 
 /allPlaces get
 
@@ -73,3 +82,13 @@ public class Time {
     private boolean first;
     private boolean second;
 }
+
+/amIEnrolled post
+
+public class CheckUser {
+    private String code;
+    private int date;
+    private String adress;
+}
+
+true/false

@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteY="62dp">
 
         <CalendarView
-            android:id="@+id/calendarView"
+            android:id="@+id/calendarViewAdmin"
             android:layout_width="330dp"
             android:layout_height="304dp"
             android:layout_marginBottom="372dp"

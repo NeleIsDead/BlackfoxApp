@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -39,6 +41,8 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
     String LOG_TAG = "WorkerPlaceViewActivity";
     String CODE_KEY_STRING = "savedUserDataString";
     Bundle bundle;
+    Calendar actualSelectedDate;
+    Button sendButton;
 
 
 
@@ -62,6 +66,7 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         enrollSecondShift = findViewById(R.id.enrollSecondShift);
 
         addressTextView.setText(bundle.getString("address"));
+        sendButton = findViewById(R.id.sendTimeButton);
 
 
         Gson gson = new GsonBuilder()
@@ -75,13 +80,17 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
 
-        long pickedDate;
-        calendarView = findViewById(R.id.calendarView);
-        pickedDate = ((System.currentTimeMillis()/86400000) * 86400 + 86400);
-        calendarView.setDate(pickedDate*1000);
 
-        Log.d(LOG_TAG, String.valueOf(pickedDate));
-        Call<Data> call = api.getWorkerNumForShift(new Count(pickedDate, addressTextView.getText().toString()));
+        calendarView = findViewById(R.id.calendarView);
+        actualSelectedDate = Calendar.getInstance();
+        actualSelectedDate.setTimeInMillis(System.currentTimeMillis() + 86000000);
+        Log.d(LOG_TAG, "Before rounding" + actualSelectedDate.getTimeInMillis());
+        roundTimeBitch(actualSelectedDate);
+        calendarView.setDate(actualSelectedDate.getTimeInMillis());
+        Log.d(LOG_TAG, "After rounding " + actualSelectedDate.getTimeInMillis());
+
+        Log.d(LOG_TAG, sharedPreferences.getString(CODE_KEY_STRING, ""));
+        Call<Data> call = api.getWorkerNumForShift(new Count(actualSelectedDate.getTimeInMillis()/1000, addressTextView.getText().toString()));
         call.enqueue(new Callback<Data>() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -100,9 +109,10 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                long pickedDate = (calendarView.getDate()/86400000) * 86400;
-                Log.d(LOG_TAG, String.valueOf(pickedDate));
-                Call<Data> call = api.getWorkerNumForShift(new Count(pickedDate, addressTextView.getText().toString()));
+
+                actualSelectedDate.set(year, month, dayOfMonth);
+                roundTimeBitch(actualSelectedDate);
+                Call<Data> call = api.getWorkerNumForShift(new Count(actualSelectedDate.getTimeInMillis()/1000, addressTextView.getText().toString()));
                 call.enqueue(new Callback<Data>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -126,57 +136,63 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         enrollFirstShift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (workersForFirstShift < 6) {
-                    Call<String> call = api.enrollForShift(generateTime(pickedDate));
-                    call.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            Log.d(LOG_TAG, String.valueOf(generateTime(pickedDate).getDate()));
-                            Snackbar.make(v, "Время работы выбрано", BaseTransientBottomBar.LENGTH_SHORT).show();
-                        }
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            Snackbar.make(v, "Произошла ошибка :(", BaseTransientBottomBar.LENGTH_SHORT).show();
-                        }
-                    });
-                }else {
+                Log.d(LOG_TAG, "Текущая дата: " + actualSelectedDate.getTimeInMillis());
+                Log.d(LOG_TAG, "Checked Status: " + enrollFirstShift.isChecked());
+                if (workersForFirstShift > 6){
                     Snackbar.make(v, "На смене уже максимум работников, или произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
-                    enrollFirstShift.setActivated(false);
+                    enrollFirstShift.toggle();
+
                 }
+
             }
         });
         enrollSecondShift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (workersForSecondShift < 6) {
-                    Call<String> call = api.enrollForShift(generateTime(pickedDate));
-                    call.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            Log.d(LOG_TAG, String.valueOf(generateTime(pickedDate).getDate()));
-                            Snackbar.make(v, "Время работы выбрано", BaseTransientBottomBar.LENGTH_SHORT).show();
-                        }
+                Log.d(LOG_TAG, "Текущая дата: " + actualSelectedDate.getTimeInMillis());
+                Log.d(LOG_TAG, "Checked Status: " + enrollSecondShift.isChecked());
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            Snackbar.make(v, "Произошла ошибка :(", BaseTransientBottomBar.LENGTH_SHORT).show();
-                        }
-                    });
-                    Snackbar.make(v, "Время работы выбрано", BaseTransientBottomBar.LENGTH_SHORT).show();
-                }else {
+                if (workersForSecondShift > 6){
                     Snackbar.make(v, "На смене уже максимум работников, или произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
-                    enrollSecondShift.setActivated(false);
+                    enrollSecondShift.toggle();
                 }
-
+            }
+        });
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<String> call = api.enrollForShift(generateTime(actualSelectedDate.getTimeInMillis(), enrollFirstShift.isChecked(),enrollSecondShift.isChecked()));
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Log.d(LOG_TAG, "Sent reserved time " + generateTime(actualSelectedDate.getTimeInMillis(), enrollFirstShift.isChecked(),enrollSecondShift.isChecked()).getDate() + " to server");
+                        Log.d(LOG_TAG, "First reserved : " + generateTime(actualSelectedDate.getTimeInMillis(), enrollFirstShift.isChecked(),enrollSecondShift.isChecked()).isFirst());
+                        Log.d(LOG_TAG, "Second reserved : " + generateTime(actualSelectedDate.getTimeInMillis(), enrollFirstShift.isChecked(),enrollSecondShift.isChecked()).isSecond());
+                        Snackbar.make(v, "Время работы выбрано", BaseTransientBottomBar.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Snackbar.make(v, "Произошла ошибка :(", BaseTransientBottomBar.LENGTH_SHORT).show();
+                        Log.d(LOG_TAG, t.toString());
+                    }
+                });
             }
         });
     }
-    public Time generateTime(long pickedDate){
+    public void roundTimeBitch(@NonNull Calendar actualSelectedDate){
+        actualSelectedDate.setTimeInMillis(actualSelectedDate.getTimeInMillis());
+        actualSelectedDate.set(Calendar.SECOND, 0);
+        actualSelectedDate.set(Calendar.MINUTE, 0);
+        actualSelectedDate.set(Calendar.MILLISECOND, 0);
+        actualSelectedDate.set(Calendar.HOUR_OF_DAY, 0);
+        Log.d(LOG_TAG, "After rounding " + actualSelectedDate.getTimeInMillis());
+    }
+    public Time generateTime(long pickedDate, boolean first, boolean second){
         return new Time(sharedPreferences.getString(CODE_KEY_STRING, ""),
                                                     bundle.getString("address"),
-                                                    pickedDate,
-                                                    enrollFirstShift.isActivated(),
-                                                    enrollSecondShift.isActivated());
+                                                    pickedDate/1000,
+                                                    first,
+                                                    second);
     }
 
 }

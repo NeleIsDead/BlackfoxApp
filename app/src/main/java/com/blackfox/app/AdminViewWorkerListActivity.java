@@ -121,9 +121,7 @@ public class AdminViewWorkerListActivity extends AppCompatActivity implements Wo
                 }
             }
         });
-
     }
-
     @Override
     public void onItemclick(int position) {
         Log.d(LOG_TAG, "Copied user Code");

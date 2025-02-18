@@ -120,6 +120,8 @@ public class MainActivity extends AppCompatActivity{
 
     private void saveCode(String code, boolean isAdmin) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
         editor.putString(CODE_KEY_STRING, code);
         editor.putBoolean(CODE_KEY_BOOLEAN, isAdmin);
         editor.apply();

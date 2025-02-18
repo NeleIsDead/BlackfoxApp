@@ -99,7 +99,7 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
 
     @Override
     public void onItemclick(int position) {
-        Intent intent = new Intent(this, WorkerPlaceViewActivity.class);
+        Intent intent = new Intent(this, AdminPlaceViewActivity.class);
         chosenAddress = addressArray.get(position).getAddressString();
         Bundle bundle = new Bundle();
         bundle.putString("address", chosenAddress);

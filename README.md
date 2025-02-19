@@ -4,6 +4,8 @@ Fix Security issue with getallUsers
 
 Fix the fucking UI
 
+Idea for future: add shifts worked counter for all users and smth to subtract shifts as an admin
+
 
 
 

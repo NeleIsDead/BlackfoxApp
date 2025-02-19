@@ -102,7 +102,7 @@ class Time {
     }
 
     public long getDate() {
-        return date;
+        return date*1000;
     }
 
     public boolean isFirst() {
@@ -142,6 +142,14 @@ class Place {
     }
     public String getEnd() {
         return end;
+    }
+
+    public String getMid() {
+        return mid;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }
 class Places {

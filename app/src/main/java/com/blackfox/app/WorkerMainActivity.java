@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -60,30 +61,6 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
                 .build();
         API api = retrofit.create(API.class);
 
-        sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
-        Call<Time> call = api.nearestShift(new Code(sharedPreferences.getString(CODE_KEY_STRING, "")));
-        call.enqueue(new Callback<Time>() {
-            @Override
-            public void onResponse(Call<Time> call, Response<Time> response) {
-
-                if (response.body() != null){
-                    parseNextWorkTime(response.body());
-                } else {
-                    nextWorkTime.setText("Нет смен");
-                    nextWorkDate.setText("Добби свободный эльф");
-                    nextWorkPlace.setText("");
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<Time> call, Throwable t) {
-
-            }
-        });
-
-
 
         RecyclerView addressListRecycler = findViewById(R.id.address_list_recycler);
 
@@ -98,6 +75,26 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
                 AddressListArrayAdapter adapter = new AddressListArrayAdapter(WorkerMainActivity.this, addressArray, WorkerMainActivity.this);
                 addressListRecycler.setAdapter(adapter);
                 addressListRecycler.setLayoutManager(new LinearLayoutManager(WorkerMainActivity.this));
+
+                sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
+                Call<Time> call1 = api.nearestShift(new Code(sharedPreferences.getString(CODE_KEY_STRING, "")));
+                call1.enqueue(new Callback<Time>() {
+                    @Override
+                    public void onResponse(Call<Time> call, Response<Time> response) {
+                        Time time = response.body();
+                        if (!time.getAddress().isEmpty()){
+                            parseNextWorkTime(response.body());
+                        } else {
+                            nextWorkTime.setText("");
+                            nextWorkDate.setText("У Добби Нет смен");
+                            nextWorkPlace.setText("Добби свободный эльф");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Time> call, Throwable t) {
+                        Log.d(LOG_TAG, t.toString());
+                    }
+                });
             }
 
             @Override
@@ -106,8 +103,7 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
                 Log.d(LOG_TAG, t.getMessage());
             }
         });
-
-
+        
 
     }
 
@@ -120,15 +116,43 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
         intent.putExtras(bundle);
         invalidateMenu();
         startActivity(intent);
-
     }
 
     private void parseNextWorkTime(Time time) {
         nextWorkPlace.setText(time.getAddress());
-        String nextDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(time.getDate());
-        String nextTime = new java.text.SimpleDateFormat("HH:mm:ss").format(time.getDate());
+        String nextTime = "Ошибка";
+        Place tPlace = null;
+        String nextDate = new SimpleDateFormat("dd/MM/yyyy").format(time.getDate());
+        Log.d(LOG_TAG, "First shift: " + time.isFirst() +" | | | Second shift: " + time.isSecond());
+
+        for (int i = 0; i < addressArray.size(); i++) {
+            if (addressArray.get(i).getAddress().equals(time.getAddress())) {
+
+                tPlace = addressArray.get(i);
+                Log.d(LOG_TAG, tPlace.getAddress() + " is next");
+                break;
+            }else {
+                Log.d(LOG_TAG,"no :(");
+            }
+        }
+        Log.d(LOG_TAG, "Fetched place Info: ");
+        Log.d(LOG_TAG, tPlace.getStart());
+        Log.d(LOG_TAG, tPlace.getMid());
+        Log.d(LOG_TAG, tPlace.getEnd());
+        if (tPlace != null) {
+            if (time.isFirst() && time.isSecond()) {
+                nextTime = tPlace.getStart() + " - " + tPlace.getEnd();
+            } else if (time.isFirst() && !time.isSecond()) {
+                nextTime = tPlace.getStart() + " - " + tPlace.getMid();
+            } else if (!time.isFirst() && time.isSecond()) {
+                nextTime = tPlace.getMid() + " - " + tPlace.getEnd();
+            }
+        }else {
+            Log.d(LOG_TAG, "Error");
+        }
         nextWorkTime.setText(nextDate);
         nextWorkDate.setText(nextTime);
+
     }
 
 }

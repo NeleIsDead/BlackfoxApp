@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity{
         if (!savedCode.isEmpty()) {
             if (isSavedUserAdmin){
                 goToAdminScreen();
-            } else{
+            } else {
                 goToWorkerScreen();
             }
         }
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity{
                                         saveCode(inputtedCode.getCode(), true);
                                         goToWorkerScreen();
                                     }
-                                }else {
+                                } else {
                                     Snackbar.make(v, "Произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
                                 }
                             }

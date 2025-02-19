@@ -8,7 +8,7 @@ Idea for future: add shifts worked counter for all users and smth to subtract sh
 
 
 
-
+# Client-Server communication docs
 /addUser post
 
 public class User{

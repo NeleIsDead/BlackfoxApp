@@ -43,8 +43,8 @@
 
             <TextView
                 android:id="@+id/userName"
-                android:layout_width="329dp"
-                android:layout_height="37dp"
+                android:layout_width="323dp"
+                android:layout_height="38dp"
                 android:layout_marginStart="4dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:lineSpacingExtra="14sp"

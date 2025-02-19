@@ -85,16 +85,20 @@ public class MainActivity extends AppCompatActivity{
                         new Callback<>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
-                                if (response.body() != null){
-                                    Log.d(LOG_TAG, response.toString());
-                                    User user = response.body();
 
-                                    if (user.isAdmin) {
-                                        saveCode(inputtedCode.getCode(), false);
-                                        goToAdminScreen();
-                                    } else {
-                                        saveCode(inputtedCode.getCode(), true);
-                                        goToWorkerScreen();
+                                if (response.body() != null){
+                                    if (!response.body().getFio().equals("already")){
+                                        Log.d(LOG_TAG, response.toString());
+                                        User user = response.body();
+                                        if (!user.isAdmin) {
+                                            saveCode(inputtedCode.getCode(), false);
+                                            goToAdminScreen();
+                                        } else {
+                                            saveCode(inputtedCode.getCode(), true);
+                                            goToWorkerScreen();
+                                        }
+                                    }else {
+                                        Snackbar.make(v, "Аккаунт пользователя уже используется кем-то другим", BaseTransientBottomBar.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     Snackbar.make(v, "Произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();

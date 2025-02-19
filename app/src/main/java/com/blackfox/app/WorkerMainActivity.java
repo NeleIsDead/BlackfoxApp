@@ -67,7 +67,7 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
         Call<ArrayList<Place>> call1 = api.getPlaces();
         call1.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<ArrayList<Place>> call, Response<ArrayList<Place>> response) {
+            public void onResponse(Call<ArrayList<Place>> call1, Response<ArrayList<Place>> response) {
                 Log.d(LOG_TAG, "AAAAA");
                 Log.d(LOG_TAG, response.body().toString());
                 addressArray = response.body();
@@ -77,8 +77,8 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
                 addressListRecycler.setLayoutManager(new LinearLayoutManager(WorkerMainActivity.this));
 
                 sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
-                Call<Time> call1 = api.nearestShift(new Code(sharedPreferences.getString(CODE_KEY_STRING, "")));
-                call1.enqueue(new Callback<Time>() {
+                Call<Time> call = api.nearestShift(new Code(sharedPreferences.getString(CODE_KEY_STRING, "")));
+                call.enqueue(new Callback<Time>() {
                     @Override
                     public void onResponse(Call<Time> call, Response<Time> response) {
                         Time time = response.body();
@@ -96,15 +96,12 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
                     }
                 });
             }
-
             @Override
             public void onFailure(Call<ArrayList<Place>> call, Throwable t) {
                 Log.d(LOG_TAG, "Failed to retrieve places array");
                 Log.d(LOG_TAG, t.getMessage());
             }
         });
-        
-
     }
 
     @Override

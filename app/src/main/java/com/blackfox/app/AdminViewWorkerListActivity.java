@@ -99,7 +99,7 @@ public class AdminViewWorkerListActivity extends AppCompatActivity implements Wo
 
                     Call<String> call = api.addUser(new User(userName.getText().toString(),
                                                             phoneNum.getText().toString(),
-                                                            isAdmin.isActivated()
+                                                            isAdmin.isChecked()
                     ));
                     call.enqueue(
                             new Callback<String>() {
@@ -108,7 +108,7 @@ public class AdminViewWorkerListActivity extends AppCompatActivity implements Wo
                                     Log.d(LOG_TAG, "Added user :thumbs_up_emoji:");
                                     userName.setText("");
                                     phoneNum.setText("");
-                                    isAdmin.setActivated(false);
+                                    isAdmin.setChecked(false);
                                 }
 
                                 @Override

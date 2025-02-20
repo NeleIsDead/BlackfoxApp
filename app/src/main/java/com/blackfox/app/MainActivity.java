@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity{
 
     Button loginButton;
     EditText inputCode;
+    TextView tempSavedCodeText;
     SharedPreferences sharedPreferences;
     private final String CODE_KEY_STRING = "savedUserDataString";
     private final String CODE_KEY_BOOLEAN = "savedUserDataBoolean";
@@ -54,15 +56,21 @@ public class MainActivity extends AppCompatActivity{
                 .build();
         API api = retrofit.create(API.class);
 
+
+
         loginButton = findViewById(R.id.loginButton);
         inputCode = findViewById(R.id.codeInputField);
+
+        tempSavedCodeText = findViewById(R.id.tempSavedCode);
 
         sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
 
         String savedCode = sharedPreferences.getString(CODE_KEY_STRING, "");
         boolean isSavedUserAdmin = sharedPreferences.getBoolean(CODE_KEY_BOOLEAN, false);
+        String temp = "Code:" + savedCode + " \n isAdmin: " + isSavedUserAdmin;
+        tempSavedCodeText.setText(temp);
 
-        if (!savedCode.isEmpty()) {
+        if (!savedCode.equals("")) {
             if (isSavedUserAdmin){
                 goToAdminScreen();
             } else {
@@ -81,25 +89,23 @@ public class MainActivity extends AppCompatActivity{
 //                else goToAdminScreen();
 
 
-
-
                 /* Authenticating user with server */
                 Call<User> call = api.activate(inputtedCode);
                 call.enqueue(
                         new Callback<>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
-
-                                if (response.body() != null){
+                                User user = response.body();
+                                Log.d(LOG_TAG, user.fio + " " + user.isAdmin());
+                                if (!user.getFio().equals("")){
                                     /*Blocks entry if user is already authenticated on different device*/
-                                    if (!response.body().getFio().equals("already")){
-                                        Log.d(LOG_TAG, response.toString());
-                                        User user = response.body();
-                                        if (!user.isAdmin) {
-                                            saveCode(inputtedCode.getCode(), false);
+                                    if (!user.getFio().equals("already")){
+
+                                        if (user.isAdmin) {
+                                            saveCode(inputtedCode.getCode(), true);
                                             goToAdminScreen();
                                         } else {
-                                            saveCode(inputtedCode.getCode(), true);
+                                            saveCode(inputtedCode.getCode(), false);
                                             goToWorkerScreen();
                                         }
                                     }else {

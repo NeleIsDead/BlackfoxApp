@@ -37,13 +37,11 @@ public class AddressListArrayAdapter extends RecyclerView.Adapter<AddressListArr
 
     @Override
     public void onBindViewHolder(@NonNull AddressListArrayAdapter.ViewHolder holder, int position) {
-        Log.d("Recycler", "setting text");
         holder.addressText.setText(addressList.get(position).getAddressString());
     }
 
     @Override
     public int getItemCount() {
-        Log.d("Recycler", addressList.toString());
         return addressList.size();
     }
 

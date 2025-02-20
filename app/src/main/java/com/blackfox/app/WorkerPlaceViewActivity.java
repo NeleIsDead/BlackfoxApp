@@ -120,8 +120,10 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
                         workersForSecondShift = data.getSecond();
                         Log.d(LOG_TAG, String.valueOf(workersForFirstShift));
                         Log.d(LOG_TAG, String.valueOf(workersForSecondShift));
-                        firstShiftWorkerNum.setText("Уже на 1 смене: " + workersForFirstShift +" чел");
-                        secondShiftWorkerNum.setText("Уже на 2 смене: " + workersForSecondShift +" чел");
+                        String a = "Уже на 1 смене: " + workersForFirstShift + " чел";
+                        String b = "Уже на 2 смене: " + workersForSecondShift + " чел";
+                        firstShiftWorkerNum.setText(a);
+                        secondShiftWorkerNum.setText(b);
                     }
                     @Override
                     public void onFailure(Call<Data> call, Throwable t) {
@@ -139,9 +141,7 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
                 if (workersForFirstShift > 6){
                     Snackbar.make(v, "На смене уже максимум работников, или произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
                     enrollFirstShift.toggle();
-
                 }
-
             }
         });
         enrollSecondShift.setOnClickListener(new View.OnClickListener() {

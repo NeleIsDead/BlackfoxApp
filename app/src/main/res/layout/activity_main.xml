@@ -39,21 +39,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/codeInputField" />
 
-    <Button
-        android:id="@+id/loginByCodeButton"
-        android:layout_width="247dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="88dp"
-        android:backgroundTint="@color/orange"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="Войти по устройству"
-        android:textColor="@android:color/black"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/codeInputField"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/codeInputField" />
-
     <EditText
         android:id="@+id/codeInputField"
         android:layout_width="254dp"

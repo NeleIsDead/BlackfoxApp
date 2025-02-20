@@ -43,9 +43,7 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
     Bundle bundle;
     Calendar actualSelectedDate;
     Button sendButton;
-
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +54,8 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        
+        /* Registering most */
         bundle = getIntent().getExtras();
         assert bundle != null;
         addressTextView = findViewById(R.id.addressText);
@@ -79,13 +78,12 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         API api = retrofit.create(API.class);
 
         sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
-
-
+        
         calendarView = findViewById(R.id.calendarView);
         actualSelectedDate = Calendar.getInstance();
         actualSelectedDate.setTimeInMillis(System.currentTimeMillis() + 86000000);
         Log.d(LOG_TAG, "Before rounding" + actualSelectedDate.getTimeInMillis());
-        roundTimeBitch(actualSelectedDate);
+        roundMyTime(actualSelectedDate);
         calendarView.setDate(actualSelectedDate.getTimeInMillis());
         Log.d(LOG_TAG, "After rounding " + actualSelectedDate.getTimeInMillis());
 
@@ -111,7 +109,7 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
                 actualSelectedDate.set(year, month, dayOfMonth);
-                roundTimeBitch(actualSelectedDate);
+                roundMyTime(actualSelectedDate);
                 Call<Data> call = api.getWorkerNumForShift(new Count(actualSelectedDate.getTimeInMillis()/1000, addressTextView.getText().toString()));
                 call.enqueue(new Callback<Data>() {
                     @SuppressLint("SetTextI18n")
@@ -158,6 +156,8 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /*Button that sends off the request to enroll for a shift*/
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +179,9 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
             }
         });
     }
-    public void roundTimeBitch(@NonNull Calendar actualSelectedDate){
+
+    /* Formatting and rounding Time down to 00:00:00 to match server */
+    public void roundMyTime(@NonNull Calendar actualSelectedDate){
         actualSelectedDate.setTimeInMillis(actualSelectedDate.getTimeInMillis());
         actualSelectedDate.set(Calendar.SECOND, 0);
         actualSelectedDate.set(Calendar.MINUTE, 0);
@@ -187,6 +189,11 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         actualSelectedDate.set(Calendar.HOUR_OF_DAY, 0);
         Log.d(LOG_TAG, "After rounding " + actualSelectedDate.getTimeInMillis());
     }
+
+    /*
+    Generates time object with user code, address of picked job place, booleans for shifts chosen
+    and the actual UNIX TIME converting it to seconds instead of Millis
+    */
     public Time generateTime(long pickedDate, boolean first, boolean second){
         return new Time(sharedPreferences.getString(CODE_KEY_STRING, ""),
                                                     bundle.getString("address"),

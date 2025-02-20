@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity{
 //                }
 //                else goToAdminScreen();
 
+
+
+
+                /* Authenticating user with server */
                 Call<User> call = api.activate(inputtedCode);
                 call.enqueue(
                         new Callback<>() {
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity{
                             public void onResponse(Call<User> call, Response<User> response) {
 
                                 if (response.body() != null){
+                                    /*Blocks entry if user is already authenticated on different device*/
                                     if (!response.body().getFio().equals("already")){
                                         Log.d(LOG_TAG, response.toString());
                                         User user = response.body();
@@ -123,6 +128,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void saveCode(String code, boolean isAdmin) {
+        /* Saving user stuff to sharedPreferences */
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();

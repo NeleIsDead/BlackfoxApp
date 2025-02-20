@@ -3,7 +3,6 @@ package com.blackfox.app;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity{
     EditText inputCode;
     ImageButton imageDebugButton;
     private int debugClickCounter;
-
     SharedPreferences sharedPreferences;
     private final String CODE_KEY_STRING = "savedUserDataString";
     private final String CODE_KEY_BOOLEAN1 = "savedUserDataBoolean";
@@ -63,8 +61,6 @@ public class MainActivity extends AppCompatActivity{
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         API api = retrofit.create(API.class);
-
-
 
         loginButton = findViewById(R.id.loginButton);
         inputCode = findViewById(R.id.codeInputField);
@@ -88,7 +84,6 @@ public class MainActivity extends AppCompatActivity{
         debugTextView.setText(temp);
         debugTextView.setVisibility(INVISIBLE);
 
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +104,7 @@ public class MainActivity extends AppCompatActivity{
                                  public void onResponse(Call<User> call, Response<User> response) {
                                      User user = response.body();
                                      Log.d(LOG_TAG, user.fio + " " + user.isAdmin());
-                                     if (!user.getFio().equals("")) {
+                                     if (!user.getFio().isEmpty()) {
                                          /*Blocks entry if user is already authenticated on different device*/
                                          if (!user.getFio().equals("already") && !user.getFio().equals("not exist")) {
 
@@ -138,8 +133,6 @@ public class MainActivity extends AppCompatActivity{
                  }
             }
         });
-
-
         /*The logo is a button that if spammed shows debug info*/
         imageDebugButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,15 +150,12 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
-
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
-
     private void saveCode(String code, boolean isAdmin, boolean serverConfirmed) {
         /* Saving user stuff to sharedPreferences */
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -175,24 +165,20 @@ public class MainActivity extends AppCompatActivity{
         editor.putBoolean(CODE_KEY_BOOLEAN1, isAdmin);
         editor.putBoolean(CODE_KEY_BOOLEAN2, serverConfirmed);
         editor.apply();
+
     }
-
-
     public void goToWorkerScreen() {
         Log.d("main_activity", "going to worker screen");
         invalidateMenu();
         Intent intent = new Intent(this, WorkerMainActivity.class);
         startActivity(intent);
     }
-
     public void goToAdminScreen() {
         Log.d("main_activity", "going to admin screen");
         invalidateMenu();
         Intent intent = new Intent(this, AdminMainActivity.class);
         startActivity(intent);
     }
-
-
 
     //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA

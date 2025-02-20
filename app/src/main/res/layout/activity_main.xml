@@ -28,10 +28,25 @@
         android:id="@+id/loginButton"
         android:layout_width="247dp"
         android:layout_height="44dp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginBottom="148dp"
         android:backgroundTint="@color/orange"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Войти"
+        android:text="Войти по коду"
+        android:textColor="@android:color/black"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/codeInputField"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/codeInputField" />
+
+    <Button
+        android:id="@+id/loginByCodeButton"
+        android:layout_width="247dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="88dp"
+        android:backgroundTint="@color/orange"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Войти по устройству"
         android:textColor="@android:color/black"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,10 +78,27 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.836" />
+
+    <ImageButton
+        android:id="@+id/debugButton"
+        android:layout_width="362dp"
+        android:layout_height="353dp"
+        android:layout_gravity="center_horizontal"
+        android:adjustViewBounds="true"
+        android:background="@color/black1"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logooo"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/codeInputField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

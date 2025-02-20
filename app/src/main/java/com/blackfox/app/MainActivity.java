@@ -1,5 +1,8 @@
 package com.blackfox.app;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -33,11 +37,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity{
 
     Button loginButton;
+    Button loginByCodeButton;
     EditText inputCode;
-    TextView tempSavedCodeText;
+    ImageButton imageDebugButton;
+    private int debugClickCounter;
+
     SharedPreferences sharedPreferences;
     private final String CODE_KEY_STRING = "savedUserDataString";
-    private final String CODE_KEY_BOOLEAN = "savedUserDataBoolean";
+    private final String CODE_KEY_BOOLEAN1 = "savedUserDataBoolean";
+    private final String CODE_KEY_BOOLEAN2 = "savedUserDataBoolean2";
     String LOG_TAG = "MainActivity";
 
     @Override
@@ -60,68 +68,101 @@ public class MainActivity extends AppCompatActivity{
 
         loginButton = findViewById(R.id.loginButton);
         inputCode = findViewById(R.id.codeInputField);
-
-        tempSavedCodeText = findViewById(R.id.tempSavedCode);
+        loginByCodeButton = findViewById(R.id.loginByCodeButton);
+        imageDebugButton = findViewById(R.id.debugButton);
 
         sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
+        String savedCode = sharedPreferences.getString(CODE_KEY_STRING, "0");
+        boolean isSavedUserAdmin = sharedPreferences.getBoolean(CODE_KEY_BOOLEAN1, false);
+        boolean isConfirmedByServer = sharedPreferences.getBoolean(CODE_KEY_BOOLEAN2, false);
 
-        String savedCode = sharedPreferences.getString(CODE_KEY_STRING, "");
-        boolean isSavedUserAdmin = sharedPreferences.getBoolean(CODE_KEY_BOOLEAN, false);
-        String temp = "Code:" + savedCode + " \n isAdmin: " + isSavedUserAdmin;
-        tempSavedCodeText.setText(temp);
+        String temp = "Code:" + savedCode + " \nisAdmin: " + isSavedUserAdmin + "\nisConfirmedByServer: " + isConfirmedByServer;
+        TextView debugTextView = findViewById(R.id.tempSavedCode);
+        Log.d(LOG_TAG, temp);
+        debugTextView.setText(temp);
+        debugTextView.setVisibility(INVISIBLE);
 
-        if (!savedCode.equals("")) {
-            if (isSavedUserAdmin){
-                goToAdminScreen();
-            } else {
-                goToWorkerScreen();
-            }
-        }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Code inputtedCode = new Code(inputCode.getText().toString());
-
-//                if (inputtedCode.equals("user")) {
-//                    goToWorkerScreen();
-//                }
-//                else goToAdminScreen();
+                if (!inputtedCode.getCode().isEmpty()) {
 
 
-                /* Authenticating user with server */
-                Call<User> call = api.activate(inputtedCode);
-                call.enqueue(
-                        new Callback<>() {
-                            @Override
-                            public void onResponse(Call<User> call, Response<User> response) {
-                                User user = response.body();
-                                Log.d(LOG_TAG, user.fio + " " + user.isAdmin());
-                                if (!user.getFio().equals("")){
-                                    /*Blocks entry if user is already authenticated on different device*/
-                                    if (!user.getFio().equals("already")){
+                     //                if (inputtedCode.equals("user")) {
+                     //                    goToWorkerScreen();
+                     //                }
+                     //                else goToAdminScreen();
 
-                                        if (user.isAdmin) {
-                                            saveCode(inputtedCode.getCode(), true);
-                                            goToAdminScreen();
-                                        } else {
-                                            saveCode(inputtedCode.getCode(), false);
-                                            goToWorkerScreen();
-                                        }
-                                    }else {
-                                        Snackbar.make(v, "Аккаунт пользователя уже используется кем-то другим", BaseTransientBottomBar.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    Snackbar.make(v, "Произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
-                                }
-                            }
-                            @Override
-                            public void onFailure(Call<User> call, Throwable t) {
-                                Log.d("server Error", Objects.requireNonNull(t.getMessage()));
-                                Snackbar.make(v, "Сервер не отвечает", BaseTransientBottomBar.LENGTH_SHORT).show();
-                            }
-                        }
-                );
+                     /* Authenticating user with server */
+                     Call<User> call = api.activate(inputtedCode);
+                     call.enqueue(
+                             new Callback<>() {
+                                 @Override
+                                 public void onResponse(Call<User> call, Response<User> response) {
+                                     User user = response.body();
+                                     Log.d(LOG_TAG, user.fio + " " + user.isAdmin());
+                                     if (!user.getFio().equals("")) {
+                                         /*Blocks entry if user is already authenticated on different device*/
+                                         if (!user.getFio().equals("already") && !user.getFio().equals("not exist")) {
+
+                                             if (user.isAdmin) {
+                                                 saveCode(inputtedCode.getCode(), true, true);
+                                                 goToAdminScreen();
+                                             } else {
+                                                 saveCode(inputtedCode.getCode(), false, true);
+                                                 goToWorkerScreen();
+                                             }
+                                         } else {
+                                             Snackbar.make(v, "Аккаунт пользователя уже используется кем-то другим", BaseTransientBottomBar.LENGTH_SHORT).show();
+                                         }
+                                     } else {
+                                         Snackbar.make(v, "Произошла ошибка", BaseTransientBottomBar.LENGTH_SHORT).show();
+                                     }
+                                 }
+
+                                 @Override
+                                 public void onFailure(Call<User> call, Throwable t) {
+                                     Log.d("server Error", Objects.requireNonNull(t.getMessage()));
+                                     Snackbar.make(v, "Сервер не отвечает", BaseTransientBottomBar.LENGTH_SHORT).show();
+                                 }
+                             }
+                     );
+                 }
+            }
+        });
+
+        /*Button to log in with the code you used last time*/
+        loginByCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isConfirmedByServer) {
+                    if (isSavedUserAdmin){
+                        goToAdminScreen();
+                    } else {
+                        goToWorkerScreen();
+                    }
+                }
+            }
+        });
+
+        /*The logo is a button that if spammed shows debug info*/
+        imageDebugButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (debugClickCounter >=10){
+                    if (debugTextView.getVisibility() == VISIBLE){
+                        debugTextView.setVisibility(INVISIBLE);
+                    }else {
+                        debugTextView.setVisibility(VISIBLE);
+                    }
+
+                    debugClickCounter = 0;
+                }else {
+                    debugClickCounter+=1;
+                }
             }
         });
 
@@ -133,13 +174,14 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-    private void saveCode(String code, boolean isAdmin) {
+    private void saveCode(String code, boolean isAdmin, boolean serverConfirmed) {
         /* Saving user stuff to sharedPreferences */
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
         editor.putString(CODE_KEY_STRING, code);
-        editor.putBoolean(CODE_KEY_BOOLEAN, isAdmin);
+        editor.putBoolean(CODE_KEY_BOOLEAN1, isAdmin);
+        editor.putBoolean(CODE_KEY_BOOLEAN2, serverConfirmed);
         editor.apply();
     }
 

@@ -1,5 +1,7 @@
 package com.blackfox.app;
 
+import static androidx.core.content.ContextCompat.getColor;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +37,9 @@ public class WorkerListArrayAdapter extends RecyclerView.Adapter<WorkerListArray
     public void onBindViewHolder(@NonNull WorkerListArrayAdapter.ViewHolder holder, int position) {
         holder.phoneNumber.setText(userArrayList.get(position).getPhone());
         holder.userName.setText(userArrayList.get(position).getFIO());
+        if (userArrayList.get(position).isActivated()){
+            holder.userName.setTextColor(getColor(ctx, R.color.orange));
+        }
         holder.userCode.setText(userArrayList.get(position).getCode());
     }
     public int getItemCount() {

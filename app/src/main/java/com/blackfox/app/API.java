@@ -105,6 +105,10 @@ class Time {
         return date*1000;
     }
 
+    public void addOneMoreDay() {
+        this.date = this.date + 86400;
+    }
+
     public boolean isFirst() {
         return first;
     }

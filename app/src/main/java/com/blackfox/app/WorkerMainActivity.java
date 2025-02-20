@@ -1,9 +1,12 @@
 package com.blackfox.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -30,7 +33,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WorkerMainActivity extends AppCompatActivity implements AddressChoiceInterface {
 
     public String chosenAddress;
+    Context ctx;
     TextView nextWorkDate, nextWorkTime, nextWorkPlace;
+    Button refreshButton;
     public final ArrayList<String> addressArrayOld = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
     public final String LOG_TAG = "WorkerMainActivity";
     SharedPreferences sharedPreferences;
@@ -102,6 +107,14 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
                 Log.d(LOG_TAG, t.getMessage());
             }
         });
+
+        refreshButton = findViewById(R.id.refreshButton);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToWorkerScreen();
+            }
+        });
     }
 
     @Override
@@ -124,7 +137,6 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
 
         for (int i = 0; i < addressArray.size(); i++) {
             if (addressArray.get(i).getAddress().equals(time.getAddress())) {
-
                 tPlace = addressArray.get(i);
                 Log.d(LOG_TAG, tPlace.getAddress() + " is next");
                 break;
@@ -150,6 +162,12 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
         nextWorkTime.setText(nextDate);
         nextWorkDate.setText(nextTime);
 
+    }
+    public void goToWorkerScreen() {
+        Log.d("main_activity", "going to worker screen");
+        invalidateMenu();
+        Intent intent = new Intent(this, WorkerMainActivity.class);
+        startActivity(intent);
     }
 
 }

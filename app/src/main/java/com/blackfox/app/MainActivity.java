@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity{
         imageDebugButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (debugClickCounter >=42){
+                if (debugClickCounter >= 42){
                     if (debugTextView.getVisibility() == VISIBLE){
                         debugTextView.setVisibility(INVISIBLE);
                     }else {

@@ -21,22 +21,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.Retrofit.Builder;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity{
 
     Button loginButton;
-    Button loginByCodeButton;
     EditText inputCode;
     ImageButton imageDebugButton;
     private int debugClickCounter;
@@ -52,15 +46,7 @@ public class MainActivity extends AppCompatActivity{
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        Retrofit retrofit = new Builder()
-                .baseUrl(getString(R.string.server_address))
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        API api = retrofit.create(API.class);
+        API api = RetrofitBuilder.api();
 
         loginButton = findViewById(R.id.loginButton);
         inputCode = findViewById(R.id.codeInputField);
@@ -78,10 +64,10 @@ public class MainActivity extends AppCompatActivity{
                 goToWorkerScreen();
             }
         }
-        String temp = "Code:" + savedCode + " \nisAdmin: " + isSavedUserAdmin + "\nisConfirmedByServer: " + isConfirmedByServer;
+        String debugText = "Code:" + savedCode + " \nisAdmin: " + isSavedUserAdmin + "\nisConfirmedByServer: " + isConfirmedByServer;
         TextView debugTextView = findViewById(R.id.tempSavedCode);
-        Log.d(LOG_TAG, temp);
-        debugTextView.setText(temp);
+        Log.d(LOG_TAG, debugText);
+        debugTextView.setText(debugText);
         debugTextView.setVisibility(INVISIBLE);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +76,7 @@ public class MainActivity extends AppCompatActivity{
                 Code inputtedCode = new Code(inputCode.getText().toString());
                 if (!inputtedCode.getCode().isEmpty()) {
 
-
+                     //For testing when server is down
                      //                if (inputtedCode.equals("user")) {
                      //                    goToWorkerScreen();
                      //                }
@@ -105,9 +91,8 @@ public class MainActivity extends AppCompatActivity{
                                      User user = response.body();
                                      Log.d(LOG_TAG, user.fio + " " + user.isAdmin());
                                      if (!user.getFio().isEmpty()) {
-                                         /*Blocks entry if user is already authenticated on different device*/
+                                         /*Blocks entry if user is already authenticated on different device or doesn't exist*/
                                          if (!user.getFio().equals("already") && !user.getFio().equals("not exist")) {
-
                                              if (user.isAdmin) {
                                                  saveCode(inputtedCode.getCode(), true, true);
                                                  goToAdminScreen();
@@ -179,80 +164,5 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(this, AdminMainActivity.class);
         startActivity(intent);
     }
-
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-
 
 }

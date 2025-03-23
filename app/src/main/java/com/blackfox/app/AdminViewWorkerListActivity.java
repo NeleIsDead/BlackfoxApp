@@ -21,18 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.POST;
 
 public class AdminViewWorkerListActivity extends AppCompatActivity implements WorkerCopyCodeInterface{
 
@@ -57,14 +52,7 @@ public class AdminViewWorkerListActivity extends AppCompatActivity implements Wo
             return insets;
         });
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.server_address))
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        API api = retrofit.create(API.class);
+        API api = RetrofitBuilder.api();
 
         userName = findViewById(R.id.userName);
         phoneNum = findViewById(R.id.phoneNumber);
@@ -76,8 +64,8 @@ public class AdminViewWorkerListActivity extends AppCompatActivity implements Wo
             @Override
             public void onResponse(Call<ArrayList<CoolerUser>> call, Response<ArrayList<CoolerUser>> response) {
 
-                Log.d(LOG_TAG, "Recieved Places Arraylist from server:");
-                Log.d(LOG_TAG, response.body().toString());
+                Log.d(LOG_TAG, "Recieved Users Arraylist from server:");
+                Log.d(LOG_TAG, response.body().get(1).getCode());
                 userArrayList = response.body();
 
                 WorkerListArrayAdapter adapter = new WorkerListArrayAdapter(AdminViewWorkerListActivity.this, userArrayList, AdminViewWorkerListActivity.this);
@@ -96,7 +84,6 @@ public class AdminViewWorkerListActivity extends AppCompatActivity implements Wo
             @Override
             public void onClick(View v) {
                 if (!(userName.getText().length() == 0) && !(phoneNum.getText().length() == 0)){
-
                     Call<String> call = api.addUser(new User(userName.getText().toString(),
                                                             phoneNum.getText().toString(),
                                                             isAdmin.isChecked()
@@ -110,7 +97,6 @@ public class AdminViewWorkerListActivity extends AppCompatActivity implements Wo
                                     phoneNum.setText("");
                                     isAdmin.setChecked(false);
                                 }
-
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
                                     Log.d(LOG_TAG, "User not added, fuck you");

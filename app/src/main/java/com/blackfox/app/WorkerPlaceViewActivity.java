@@ -19,17 +19,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.Calendar;
-import java.util.Date;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WorkerPlaceViewActivity extends AppCompatActivity {
 
@@ -54,8 +50,7 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        
-        /* Registering most */
+
         bundle = getIntent().getExtras();
         assert bundle != null;
         addressTextView = findViewById(R.id.addressText);
@@ -63,34 +58,23 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         secondShiftWorkerNum = findViewById(R.id.workersForSecondShift);
         enrollFirstShift = findViewById(R.id.enrollFirstShift);
         enrollSecondShift = findViewById(R.id.enrollSecondShift);
-
+        sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
+        calendarView = findViewById(R.id.calendarView);
         addressTextView.setText(bundle.getString("address"));
         sendButton = findViewById(R.id.sendTimeButton);
 
+        API api = RetrofitBuilder.api();
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.server_address))
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        API api = retrofit.create(API.class);
-
-        sharedPreferences = getSharedPreferences("СodePreferences", MODE_PRIVATE);
-        
-        calendarView = findViewById(R.id.calendarView);
         actualSelectedDate = Calendar.getInstance();
         actualSelectedDate.setTimeInMillis(System.currentTimeMillis() + 86000000);
         Log.d(LOG_TAG, "Before rounding" + actualSelectedDate.getTimeInMillis());
         roundMyTime(actualSelectedDate);
         calendarView.setDate(actualSelectedDate.getTimeInMillis());
         Log.d(LOG_TAG, "After rounding " + actualSelectedDate.getTimeInMillis());
-
         Log.d(LOG_TAG, sharedPreferences.getString(CODE_KEY_STRING, ""));
+
         Call<Data> call = api.getWorkerNumForShift(new Count(actualSelectedDate.getTimeInMillis()/1000, addressTextView.getText().toString()));
         call.enqueue(new Callback<Data>() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
                 Data data = response.body();
@@ -180,7 +164,7 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
         });
     }
 
-    /* Formatting and rounding Time down to 00:00:00 to match server */
+    /* Formatting and rounding Time down to 00:00:00 so the server can handle it */
     public void roundMyTime(@NonNull Calendar actualSelectedDate){
         actualSelectedDate.setTimeInMillis(actualSelectedDate.getTimeInMillis());
         actualSelectedDate.set(Calendar.SECOND, 0);
@@ -192,7 +176,7 @@ public class WorkerPlaceViewActivity extends AppCompatActivity {
 
     /*
     Generates time object with user code, address of picked job place, booleans for shifts chosen
-    and the actual UNIX TIME converting it to seconds instead of Millis
+    and the actual UNIX TIME converting it to seconds instead of Millis because python is fucking weird
     */
     public Time generateTime(long pickedDate, boolean first, boolean second){
         return new Time(sharedPreferences.getString(CODE_KEY_STRING, ""),

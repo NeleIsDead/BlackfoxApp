@@ -8,16 +8,12 @@ import android.widget.Button;
 import android.widget.CalendarView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +22,6 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AdminMainActivity extends AppCompatActivity implements AddressChoiceInterface {
 
@@ -53,14 +47,7 @@ public class AdminMainActivity extends AppCompatActivity implements AddressChoic
             return insets;
         });
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.server_address))
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        API api = retrofit.create(API.class);
+        API api = RetrofitBuilder.api();
 
         workerListButton = findViewById(R.id.workerListButton);
 

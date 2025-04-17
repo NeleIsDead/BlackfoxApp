@@ -31,7 +31,7 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
 
     TextView nextWorkDate, nextWorkTime, nextWorkPlace;
     Button refreshButton;
-    public final ArrayList<String> addressArrayOld = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
+    //public final ArrayList<String> addressArrayOld = new ArrayList<String>(Arrays.asList(new String[]{"Ленинский район", "Проспект Гагарина", "Ул.Крупской 42", "Большая Краснофлотская улица", "Промышленный район", "Улица Рыленкова, 18", "Багратиона 16", "Улица Октябрьской Революции, 24", "Проспект Гагарина, 1/3", "Улица Ленина, 4", "Коммунистическая улица, 6", "Улица 25 Сентября, 35А"}));
     public final String LOG_TAG = "WorkerMainActivity";
     SharedPreferences sharedPreferences;
     private final String CODE_KEY_STRING = "savedUserDataString";
@@ -113,40 +113,28 @@ public class WorkerMainActivity extends AppCompatActivity implements AddressChoi
         startActivity(intent);
     }
 
+
     private void parseNextWorkTime(Time time) {
-        nextWorkPlace.setText(time.getAddress());
         String nextTime = "Ошибка";
         Place tPlace = null;
-        String nextDate = new SimpleDateFormat("dd/MM/yyyy").format(time.getDate());
-        Log.d(LOG_TAG, "First shift: " + time.isFirst() +" | | | Second shift: " + time.isSecond());
+        String nextDate = "Ошибка";
+        Log.d(LOG_TAG, "Start: " + time.getStart() +" | | | End: " + time.getEnd());
 
+        //Validates that the recieved address actually exists
         for (int i = 0; i < addressArray.size(); i++) {
             if (addressArray.get(i).getAddress().equals(time.getAddress())) {
                 tPlace = addressArray.get(i);
-                Log.d(LOG_TAG, tPlace.getAddress() + " is next");
+                Log.d(LOG_TAG, tPlace.getAddress() + " is next work place");
+                nextWorkPlace.setText(time.getAddress());
+                nextTime = time.getStart() + " - " + time.getEnd();
+                nextDate = new SimpleDateFormat("dd/MM/yyyy").format(time.getDate());
                 break;
             }else {
                 Log.d(LOG_TAG,"no :(");
             }
         }
-        Log.d(LOG_TAG, "Fetched place Info: ");
-        Log.d(LOG_TAG, tPlace.getStart());
-        Log.d(LOG_TAG, tPlace.getMid());
-        Log.d(LOG_TAG, tPlace.getEnd());
-        if (tPlace != null) {
-            if (time.isFirst() && time.isSecond()) {
-                nextTime = tPlace.getStart() + " - " + tPlace.getEnd();
-            } else if (time.isFirst() && !time.isSecond()) {
-                nextTime = tPlace.getStart() + " - " + tPlace.getMid();
-            } else if (!time.isFirst() && time.isSecond()) {
-                nextTime = tPlace.getMid() + " - " + tPlace.getEnd();
-            }
-        }else {
-            Log.d(LOG_TAG, "Error");
-        }
-        nextWorkTime.setText(nextDate);
-        nextWorkDate.setText(nextTime);
-
+        nextWorkDate.setText(nextDate);
+        nextWorkTime.setText(nextTime);
     }
     public void goToWorkerScreen() {
         Log.d("main_activity", "going to worker screen");

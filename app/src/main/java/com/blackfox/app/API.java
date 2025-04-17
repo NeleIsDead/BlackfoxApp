@@ -10,15 +10,12 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface API {
-
     @GET("/allPlaces")
     Call<ArrayList<Place>> getPlaces();
     @GET("/allUsers")
     Call<ArrayList<CoolerUser>> getAllUsers();
     @POST("/addTime")
     Call<String> enrollForShift(@Body Time time);
-    @POST("/countByTime")
-    Call<Data> getWorkerNumForShift(@Body Count count);
     @POST("/activate")
     Call<User> activate(@Body Code code);
     @POST("/addUser")
@@ -47,6 +44,7 @@ class User {
         return isAdmin;
     }
 }
+
 //User Class with more info in it
 class CoolerUser {
     private String phone;
@@ -54,23 +52,18 @@ class CoolerUser {
     private String fio;
     private String code;
     private boolean isActivated;
-
     public String getPhone() {
         return phone;
     }
-
     public boolean isAdmin() {
         return isAdmin;
     }
-
     public String getFIO() {
         return fio;
     }
-
     public String getCode() {
         return code;
     }
-
     public boolean isActivated() {
         return isActivated;
     }
@@ -90,11 +83,30 @@ class Time {
     private String code;
     private String address;
     private long date;
-    private boolean first;
-    private boolean second;
-
+    private float start;
+    private float end;
     public String getCode() {
         return code;
+    }
+
+    public float getEnd() {
+        return end;
+    }
+
+    public void setEnd(float end) {
+        this.end = end;
+    }
+
+    public float getStart() {
+        return start;
+    }
+
+    public void setStart(float start) {
+        this.start = start;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public String getAddress() {
@@ -109,33 +121,25 @@ class Time {
         this.date = this.date + 86400;
     }
 
-    public boolean isFirst() {
-        return first;
-    }
-
-    public boolean isSecond() {
-        return second;
-    }
-
-    public Time(String code, String address, long date, boolean first, boolean second) {
+    public Time(String code, String address, long date, float start, float end) {
         this.code = code;
         this.address = address;
         this.date = date;
-        this.first = first;
-        this.second = second;
+        this.start = start;
+        this.end = end;
     }
 }
 class Place {
     //GET request
     private String address;
     private String start;
-    private String mid;
     private String end;
+    private float startFloat;
+    private float endFloat;
 
     public Place(String address, String start, String mid, String end) {
         this.address = address;
         this.start = start;
-        this.mid = mid;
         this.end = end;
     }
     public String getAddressString() {
@@ -147,11 +151,6 @@ class Place {
     public String getEnd() {
         return end;
     }
-
-    public String getMid() {
-        return mid;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -171,18 +170,5 @@ class Count {
     public Count(long time, String address) {
         this.time = time;
         this.address = address;
-    }
-}
-
-class Data {
-    private int first;
-    private int second;
-
-    public int getFirst() {
-        return first;
-    }
-
-    public int getSecond() {
-        return second;
     }
 }

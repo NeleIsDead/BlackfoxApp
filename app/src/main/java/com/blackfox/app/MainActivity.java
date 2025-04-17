@@ -5,6 +5,9 @@ import static android.view.View.VISIBLE;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -69,6 +72,8 @@ public class MainActivity extends AppCompatActivity{
         Log.d(LOG_TAG, debugText);
         debugTextView.setText(debugText);
         debugTextView.setVisibility(INVISIBLE);
+
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,11 +140,40 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+        View drawingView = new View(this){
+            @Override
+            protected void onDraw(Canvas canvas) {
+                super.onDraw(canvas);
+
+                // Clear canvas
+                canvas.drawColor(Color.LTGRAY);
+
+                // Create paint object
+                Paint paint = new Paint();
+                paint.setColor(Color.GREEN);
+                paint.setStyle(Paint.Style.FILL);
+                paint.setStrokeWidth(8f);
+
+                // Draw shapes
+                canvas.drawCircle(getWidth()/2, getHeight()/3, 150, paint);
+
+                paint.setColor(Color.MAGENTA);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawRect(200, 500, 700, 800, paint);
+
+                paint.setColor(Color.BLACK);
+                paint.setTextSize(80);
+                paint.setTextAlign(Paint.Align.CENTER);
+                canvas.drawText("Direct Drawing", getWidth()/2, 400, paint);
+            }
+        };
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
     }
     private void saveCode(String code, boolean isAdmin, boolean serverConfirmed) {
         /* Saving user stuff to sharedPreferences */

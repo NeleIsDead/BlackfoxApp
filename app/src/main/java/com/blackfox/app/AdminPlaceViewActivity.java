@@ -48,48 +48,11 @@ public class AdminPlaceViewActivity extends AppCompatActivity {
         secondShiftWorkerNum = findViewById(R.id.workersForSecondShift);
         addressTextView.setText(bundle.getString("address"));
 
-        Call<Data> call = api.getWorkerNumForShift(new Count(actualSelectedDate.getTimeInMillis()/1000, addressTextView.getText().toString()));
-        call.enqueue(new Callback<Data>() {
-            @Override
-            public void onResponse(Call<Data> call, Response<Data> response) {
-                Data data = response.body();
-                workersForFirstShift = data.getFirst();
-                workersForSecondShift = data.getSecond();
-                firstShiftWorkerNum.setText("Уже на 1 смене: " + workersForFirstShift +" чел");
-                secondShiftWorkerNum.setText("Уже на 2 смене: " + workersForSecondShift +" чел");
-            }
-            @Override
-            public void onFailure(Call<Data> call, Throwable t) {
-                Log.d(LOG_TAG, "Something went wrong with the date :(");
-            }
-        });
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-
                 actualSelectedDate.set(year, month, dayOfMonth);
                 roundMyTime(actualSelectedDate);
-                Call<Data> call = api.getWorkerNumForShift(new Count(actualSelectedDate.getTimeInMillis()/1000, addressTextView.getText().toString()));
-                call.enqueue(new Callback<Data>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onResponse(Call<Data> call, Response<Data> response) {
-                        Data data = response.body();
-                        workersForFirstShift = data.getFirst();
-                        workersForSecondShift = data.getSecond();
-                        Log.d(LOG_TAG, String.valueOf(workersForFirstShift));
-                        Log.d(LOG_TAG, String.valueOf(workersForSecondShift));
-                        String a = "Уже на 1 смене: " + workersForFirstShift + " чел";
-                        String b = "Уже на 2 смене: " + workersForSecondShift + " чел";
-                        firstShiftWorkerNum.setText(a);
-                        secondShiftWorkerNum.setText(b);
-                    }
-                    @Override
-                    public void onFailure(Call<Data> call, Throwable t) {
-                        Log.d(LOG_TAG, "Something went wrong with the date :(");
-                        Log.d(LOG_TAG, t.toString());
-                    }
-                });
             }
         });
     }
